@@ -6,7 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"

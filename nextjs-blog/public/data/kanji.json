@@ -1,0 +1,16 @@
+[
+    { 
+        "id": 1, 
+        "kanji": "所", 
+        "translation": "ところ , place", 
+        "learned": false, 
+        "lastStudied": ""
+    },
+    { 
+        "id": 2, 
+        "kanji": "する", 
+        "translation": "to do, to make, to have, to play, to wear", 
+        "learned": false, 
+        "lastStudied": ""
+    }
+]
