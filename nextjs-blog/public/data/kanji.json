@@ -1,15 +1,25 @@
 [
     { 
         "id": 1, 
-        "kanji": "所", 
-        "translation": "ところ , place", 
+        "kanji": "所",
+        "pronounce": "ところ", 
+        "translation": "place", 
         "learned": false, 
         "lastStudied": ""
     },
     { 
         "id": 2, 
-        "kanji": "する", 
+        "kanji": "する",
+        "pronounce": "する", 
         "translation": "to do, to make, to have, to play, to wear", 
+        "learned": false, 
+        "lastStudied": ""
+    },
+    { 
+        "id": 3, 
+        "kanji": "作る",
+        "pronounce": "つくる", 
+        "translation": "make, create", 
         "learned": false, 
         "lastStudied": ""
     }

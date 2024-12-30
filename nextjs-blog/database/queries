@@ -1,0 +1,19 @@
+--look at database size
+SELECT pg_size_pretty(pg_database_size('kanji'))
+
+
+INSERT INTO public."wordObject"(
+kanji, pronounciation, translation, learned)
+	VALUES  ('所', 'ところ', 'place', false);
+
+INSERT INTO public."wordObject"(
+kanji, pronounciation, translation, learned)
+	VALUES  ('する', 'する', 'to do, to make, to have, to play, to wear', false);
+
+INSERT INTO public."wordObject"(
+kanji, pronounciation, translation, learned)
+	VALUES  ('作る', 'つくる', 'make, create', false);
+
+INSERT INTO public."wordObject"(
+kanji, pronounciation, translation, learned)
+	VALUES  ('持つ', 'もつ', 'have, possess', false);

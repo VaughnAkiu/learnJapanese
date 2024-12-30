@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Card from '../objects/wordCardObject.tsx'
 
 const WordCard = (props : Card ) => {
-  const [hovered, setHovered] = useState(true);
+  const [hovered, setHovered] = useState(false);
 
   return (
     props.learned ? <></> :
@@ -13,7 +13,11 @@ const WordCard = (props : Card ) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {hovered ? <p>{props.translation}</p> :  <p>{props.kanji}</p>}
+      {hovered ? 
+      <>
+        <p>{props.pronounce}</p><p>{props.translation}</p> 
+      </>
+      :  <p>{props.kanji}</p>}
     </div>
   );
 }
