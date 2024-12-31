@@ -1,7 +1,7 @@
 import React from 'react';
 import utilStyles from '../styles/utils.module.css';
 import { useState } from 'react';
-import Card from '../objects/wordCardObject.tsx'
+import Card from '../objects/wordCardObject'
 
 const WordCard = (props : Card ) => {
   const [hovered, setHovered] = useState(false);
@@ -17,7 +17,7 @@ const WordCard = (props : Card ) => {
       <>
         <p>{props.pronounce}</p><p>{props.translation}</p> 
       </>
-      :  <p>{props.kanji}</p>}
+      :  <h1>{props.kanji}</h1>}
     </div>
   );
 }

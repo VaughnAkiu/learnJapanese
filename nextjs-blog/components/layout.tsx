@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
-import WordCard from './wordCardComponent.tsx';
+import WordCard from './wordCardComponent';
 import kanjiData from '../public/data/kanji.json';
-import Card from '../objects/wordCardObject.tsx'
+import Card from '../objects/wordCardObject'
 
 const name = 'Alkuroth';
 
