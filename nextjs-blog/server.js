@@ -18,7 +18,7 @@ const { Pool, Client } = pg
 //   ssl: false,
 // });
 
-console.log('environment variables: ', process.env.DB_USER );
+// console.log('environment variables: ', process.env.DB_USER );
  
 const pool = new Pool({
   user: process.env.DB_USER,

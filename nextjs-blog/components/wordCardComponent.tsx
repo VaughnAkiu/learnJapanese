@@ -15,7 +15,7 @@ const WordCard = (props : Card ) => {
     >
       {hovered ? 
       <>
-        <p>{props.pronounce}</p><p>{props.translation}</p> 
+        <p>{props.pronounciation}</p><p>{props.translation}</p> 
       </>
       :  <h1>{props.kanji}</h1>}
     </div>

@@ -2,7 +2,7 @@
     { 
         "id": 1, 
         "kanji": "所",
-        "pronounce": "ところ", 
+        "pronounciation": "ところ", 
         "translation": "place", 
         "learned": false, 
         "lastStudied": ""
@@ -10,7 +10,7 @@
     { 
         "id": 2, 
         "kanji": "する",
-        "pronounce": "する", 
+        "pronounciation": "する", 
         "translation": "to do, to make, to have, to play, to wear", 
         "learned": false, 
         "lastStudied": ""
@@ -18,7 +18,7 @@
     { 
         "id": 3, 
         "kanji": "作る",
-        "pronounce": "つくる", 
+        "pronounciation": "つくる", 
         "translation": "make, create", 
         "learned": false, 
         "lastStudied": ""

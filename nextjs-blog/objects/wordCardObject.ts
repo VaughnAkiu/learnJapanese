@@ -1,7 +1,7 @@
 type Card = {
     id: number
     kanji: string
-    pronounce: string
+    pronounciation: string
     translation: string
     learned: boolean
     // lastStudied: Date,

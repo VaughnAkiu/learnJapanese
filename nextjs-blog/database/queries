@@ -1,7 +1,7 @@
 --look at database size
 SELECT pg_size_pretty(pg_database_size('kanji'))
 
-
+--insert kanji
 INSERT INTO public."wordObject"(
 kanji, pronounciation, translation, learned)
 	VALUES  ('所', 'ところ', 'place', false);
