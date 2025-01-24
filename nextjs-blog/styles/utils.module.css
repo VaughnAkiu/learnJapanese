@@ -32,3 +32,12 @@
     margin: 1rem;
     width: 5rem;
   }
+
+  .containerChooseKanji {
+    border: 2px solid rgb(75 70 74);
+    border-radius: 0.5em;
+
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }

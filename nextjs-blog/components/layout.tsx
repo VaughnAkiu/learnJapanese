@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import Image from 'next/image';
 import utilStyles from '../styles/utils.module.css';
-import Link from 'next/link';
 import WordCard from './wordCardComponent';
 import kanjiData from '../public/data/kanji.json';
 import Card from '../objects/wordCardObject'
-import { GetServerSideProps } from 'next';
 
-const name = 'Vaughn';
 
-// interface Props {
-//   cardsProp: Card[];
-// }
+const name = 'Learn Kanji';
+
 
 export default function Layout({ }) {
   
@@ -46,34 +41,8 @@ export default function Layout({ }) {
       cards = data.rows;
     }
 
-      // return
-      // (
-      //   cards.map
-      //   (
-      //     (item) => 
-      //     (
-      //       <WordCard
-      //         key = {item.id}
-      //         id = {item.id}
-      //         kanji = {item.kanji}
-      //         pronounce= {item.pronounce}
-      //         translation = {item.translation}
-      //         learned = {item.learned}
-      //       >
-      //       </WordCard>
-      //     )
-      //   )
-      // );
-
     return cards;
   }
-
-  // const getCards = () => {
-  //   const cards = populateCards().then();
-
-  //   return populateCards();
-  // }
-
 
 
   const testButton = async () => {
@@ -90,39 +59,15 @@ export default function Layout({ }) {
     return;
   }
 
-
-  // const getServerSideProps: GetServerSideProps = async () => {
-  //   const response = await fetch('http://localhost:3000/api/kanjiRoute');
-  //   const data = await response.json();
-
-  //   return {
-  //     props: {
-  //       cards: data.rows,
-  //     },
-  //   };
-  // };
-
   return (
     <>
-    <button onClick={testButton}>
-      click me
-    </button>
       <div className={utilStyles.container}>
         <header>
             <>
-              <Link href="/">
-                <Image
-                  priority
-                  src="/images/profile.png"
-                  className={utilStyles.borderCircle}
-                  height={125}
-                  width={125}
-                  alt=""
-                />
-              </Link>
               <h2 className={utilStyles.headingLg}>
                   {name}
               </h2>
+              <p>flash cards (hover over them)</p>
             </>
         </header>
       </div>
@@ -143,26 +88,6 @@ export default function Layout({ }) {
             </WordCard>
           )
         )
-      // for await (card of populateCards()) {
-      //   console.log("test")
-      // }
-        // const cards = await populateCards();
-
-        // populateCards().map
-        // (
-        //   (item) => 
-        //   (
-        //     <WordCard
-        //       key = {item.id}
-        //       id = {item.id}
-        //       kanji = {item.kanji}
-        //       pronounce= {item.pronounce}
-        //       translation = {item.translation}
-        //       learned = {item.learned}
-        //     >
-        //     </WordCard>
-        //   )
-        // )
       }
     </>
 

@@ -1,1 +1,1 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Web app that uses React, Next.js, and Postgres. Main purpose is to help in the memorization for different kanji.
