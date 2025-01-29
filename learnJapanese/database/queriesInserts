@@ -1,14 +1,3 @@
---look at database size
-SELECT pg_size_pretty(pg_database_size('kanji'));
-
---select last 5 rows
-select * from public."wordObject" order by id desc limit 5;
-
---update example
-update public."wordObject"
-set kanji = '多い'
-where id = 13;
-
 --insert kanji
 INSERT INTO 
 public."wordObject"
@@ -105,3 +94,14 @@ public."wordObject"
 (kanji, pronounciation, translation, learned)
 VALUES  
 ( 'これ', 'これ', 'this, this one', false);
+
+--word_object
+
+
+
+--user_words
+INSERT INTO 
+public.user_words
+(word_object_id, learning, learned)
+VALUES  
+(1, true, false);

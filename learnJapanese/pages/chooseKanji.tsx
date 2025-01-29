@@ -2,18 +2,38 @@ import Link from 'next/link'
 import utilStyles from '../styles/utils.module.css';
 import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
+import UserWord from '../objects/userWordObject'
+import UserWordMap from '../objects/userWordMapObject'
 
 export default function chooseKanji() {
 
+    // kanji cards have no reason to be grabbed multiple times. it is an immutable dataset
+    // todo: update
+    const [initialData, setInitialData] = useState<Card[]>();
     const [data, setData] = useState<Card[]>();
+
+    const [userWordsData, setUserWordsData] = useState<UserWord[]>();
+
+    const [initialUserWordMap, setInitialUserWordMap] = useState<UserWordMap[]>();
+    const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
+
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:3000/api/kanjiRoute');
+          const response = await fetch('http://localhost:3000/api/wordObjectGet');
           const result = await response.json();
-          setData(result.rows); // Assume `result.rows` contains the desired data
+          const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
+          const userWordsResult = await userWordsResponse.json();
+
+          // Assuming all `result.rows` contains the desired data
+          // setInitialData(result.rows);
+          // setData(result.rows); 
+          // setUserWordsData(userWordsResult.rows);
+          const userWordMap = createUserDataMap(result.rows, userWordsResult.rows);
+          setInitialUserWordMap(userWordMap);
+          setUserWordMap(userWordMap);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
@@ -24,8 +44,83 @@ export default function chooseKanji() {
       fetchData();
     }, []);
 
-    const doSomething =  () => {
-        console.log("checkbox clicked");
+    // better to combine data then to use nested loops during render
+    const createUserDataMap = (kanjiCards : Card[], userWords : UserWord[]) =>
+    {
+      const userWordMap : UserWordMap[] = [];
+
+      console.log("test kanjiCards", kanjiCards);
+      console.log("test userWords", userWords);
+      // todo(low prio): nested loop, optimize?
+      for(let i = 0; i < kanjiCards.length; i++)
+      {
+        let wordCreated = false;
+        for(let j = 0; j < userWords.length; j++)
+        {
+          if(userWords[j].word_object_id == kanjiCards[i].id)
+          {
+            const userWordMapPiece : UserWordMap = {
+              word_object_id : kanjiCards[i].id,
+              learned : userWords[j].learned,
+              learning : userWords[j].learning,
+              kanji : kanjiCards[i].kanji,
+              pronounciation : kanjiCards[i].pronounciation,
+              translation : kanjiCards[i].translation,
+            };
+            userWordMap.push(userWordMapPiece);
+            wordCreated = true;
+            break;
+          }
+          // console.log("test loop iteration", j);
+        }
+        if(!wordCreated){
+          const userWordMapPiece : UserWordMap = {
+            word_object_id : kanjiCards[i].id,
+            learned : false,  // default value 
+            learning : false, // default value 
+            kanji : kanjiCards[i].kanji,
+            pronounciation : kanjiCards[i].pronounciation,
+            translation : kanjiCards[i].translation,
+          };
+          userWordMap.push(userWordMapPiece);
+        }
+
+
+      }
+
+      // console.log("test userWordMap", userWordMap);
+      return userWordMap;
+    }
+
+    const learningCheckbox =  (kanjiId : number, learning : boolean) => 
+    {
+        // console.log("checkbox clicked", kanjiId, data[kanjiId - 1]);
+        // for each row with given id, change row learned value
+        const newData = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learning : !row.learning} : row);
+        // set state of card
+        setUserWordMap(newData);
+        // change learned = false of corresponding id
+    }
+
+    const learnedCheckbox =  (kanjiId : number, learned : boolean) => 
+      {
+          // console.log("checkbox clicked", kanjiId, data[kanjiId - 1]);
+          // for each row with given id, change row learned value
+          const newData = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learned : !row.learned} : row);
+          // set state of card
+          setUserWordMap(newData);
+          // change learned = false of corresponding id
+      }
+
+    const changesTracker = () => {
+
+    }
+
+    const submitButton = () =>
+    {
+      // compares initial data with changed data and posts a query to change the db accordingly
+
+      // or i could make a object that holds the changes as they are made (better i think)
     }
 
 
@@ -55,19 +150,21 @@ export default function chooseKanji() {
                     <th>Pronounciation</th>
                     <th>Translation</th>
                     <th>Learning</th>
+                    <th>Learned</th>
                 </tr>
             </thead>
             <tbody>
                 {loading ? <tr><td>loading data...</td></tr> :
-                data.map
+                userWordMap.map
                     (
                         (row) => 
                         (
-                            <tr key={row.id}>
+                            <tr key={row.word_object_id}>
                                 <td>{row.kanji}</td>
                                 <td>{row.pronounciation}</td>
                                 <td>{row.translation}</td>
-                                <td><input type="checkbox" onClick={() => doSomething()}/></td>
+                                <td><input type="checkbox" checked={row.learning} onChange={() => learningCheckbox(row.word_object_id, row.learning)}/></td>
+                                <td><input type="checkbox" checked={row.learned} onChange={() => learnedCheckbox(row.word_object_id, row.learned)}/></td>
                             </tr>
                         )
                     )

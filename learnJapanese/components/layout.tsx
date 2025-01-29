@@ -16,7 +16,7 @@ export default function Layout({ }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/kanjiRoute');
+        const response = await fetch('http://localhost:3000/api/wordObjectGet');
         const result = await response.json();
 
         setData(result.rows); // Assume `result.rows` contains the desired data
@@ -34,7 +34,7 @@ export default function Layout({ }) {
   const populateCards = async () => {
     let cards : Card[] = kanjiData;
     
-    const response = await fetch('http://localhost:3000/api/kanjiRoute');
+    const response = await fetch('http://localhost:3000/api/wordObjectGet');
     const data = await response.json();
 
     if(data.rows.length > 0) {
@@ -46,7 +46,7 @@ export default function Layout({ }) {
 
 
   const testButton = async () => {
-    const response = await fetch('http://localhost:3000/api/kanjiRoute');
+    const response = await fetch('http://localhost:3000/api/wordObjectGet');
     const data = await response.json();
     if(data.rows.length > 0) {
       const cards : Card[] = data.rows;
@@ -83,7 +83,6 @@ export default function Layout({ }) {
               kanji = {item.kanji}
               pronounciation= {item.pronounciation}
               translation = {item.translation}
-              learned = {item.learned}
             >
             </WordCard>
           )

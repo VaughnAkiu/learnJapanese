@@ -7,7 +7,6 @@ const WordCard = (props : Card ) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    props.learned ? <></> :
     <div 
       className={utilStyles.containerSmall}
       onMouseEnter={() => setHovered(true)}

@@ -1,0 +1,47 @@
+--look at database size
+SELECT pg_size_pretty(pg_database_size('kanji'));
+
+--select
+select * from public.user_words
+
+--select last 5 rows
+select * from public."wordObject" order by id desc limit 5;
+select * from public.word_object order by id desc limit 5;
+
+--update example
+update public."wordObject"
+set kanji = '多い'
+where id = 13;
+
+--create table
+CREATE TABLE public.user_words
+(
+    id integer NOT NULL,
+    word_object_id integer NOT NULL,
+    learning boolean DEFAULT false,
+    learned boolean DEFAULT false,
+    PRIMARY KEY (id),
+    CONSTRAINT word_object_id_fk FOREIGN KEY (word_object_id)
+        REFERENCES public."wordObject" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+--alter table
+ALTER TABLE IF EXISTS public."wordObject"
+    RENAME TO word_object;
+
+ALTER TABLE IF EXISTS public.word_object DROP COLUMN IF EXISTS learned;
+
+ALTER TABLE IF EXISTS public.word_object DROP COLUMN IF EXISTS "lastStudied";
+ALTER TABLE public.word_object
+    RENAME CONSTRAINT "wordObject_pkey" TO word_object_pk;
+
+
+ALTER TABLE public.user_words
+    RENAME CONSTRAINT user_words_pkey TO user_words_pk;
+
+--alter identity
+ALTER TABLE IF EXISTS public.user_words
+    ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 );

@@ -3,7 +3,7 @@ type Card = {
     kanji: string
     pronounciation: string
     translation: string
-    learned: boolean
+    // learned: boolean
     // lastStudied: Date,
 };
 
