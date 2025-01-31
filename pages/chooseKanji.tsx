@@ -113,8 +113,16 @@ export default function chooseKanji() {
       }
 
     const changesTracker = () => {
+      let inserts : UserWord[] = [];
+      let updates : UserWord[] = [];
+
       // need to keep track of new inserts and updates to existing rows
       // updates to existing rows
+        //compare all changes with initial changes variable
+        for(let i = 0; i < 1; i++) {
+          //if there is a match then add to updates variable
+          //no match add to inserts variable
+        }
       // have a list of existing rows, if any of these have changed then update
     }
 
