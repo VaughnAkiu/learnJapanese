@@ -49,8 +49,8 @@ export default function chooseKanji() {
     {
       const userWordMap : UserWordMap[] = [];
 
-      console.log("test kanjiCards", kanjiCards);
-      console.log("test userWords", userWords);
+      // console.log("test kanjiCards", kanjiCards);
+      // console.log("test userWords", userWords);
       // todo(low prio): nested loop, optimize?
       for(let i = 0; i < kanjiCards.length; i++)
       {
@@ -113,13 +113,35 @@ export default function chooseKanji() {
       }
 
     const changesTracker = () => {
-
+      // need to keep track of new inserts and updates to existing rows
+      // updates to existing rows
+      // have a list of existing rows, if any of these have changed then update
     }
 
-    const submitButton = () =>
+    const submitButton = async () =>
     {
-      // compares initial data with changed data and posts a query to change the db accordingly
+      const requestBody : UserWord[] = [
+        {
+          word_object_id: 1,
+          learning: true,
+          learned: false,
+        },
+        {
+          word_object_id: 2,
+          learning: true,
+          learned: false,
+        },
+      ];
 
+      const request =
+      {
+        method: 'POST',
+        headers: {},
+        body: JSON.stringify(requestBody),
+      };
+      console.log('submit button,', request);
+      // compares initial data with changed data and posts a query to change the db accordingly
+      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
       // or i could make a object that holds the changes as they are made (better i think)
     }
 
@@ -172,7 +194,7 @@ export default function chooseKanji() {
             </tbody>
         </table>
         </div>
-        <button>submit</button>
+        <button onClick={() => submitButton()}>submit</button>
         </>
       );
   }

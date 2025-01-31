@@ -1,5 +1,5 @@
 type UserWord = {
-    id: number
+    // id: number
     word_object_id: number
     learning: boolean
     learned: boolean

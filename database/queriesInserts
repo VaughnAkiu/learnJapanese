@@ -105,3 +105,12 @@ public.user_words
 (word_object_id, learning, learned)
 VALUES  
 (1, true, false);
+
+--multiple insert
+INSERT INTO 
+public.user_words
+(word_object_id, learning, learned)
+VALUES  
+(2, true, false),
+(3, true, false),
+(4, true, false);
