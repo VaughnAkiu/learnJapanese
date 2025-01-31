@@ -1,12 +1,18 @@
   .headingLg {
-    font-size: 1.5rem;
-    margin: 1rem 0;
+    font-size: 2rem;
+    font-weight: 1000;
+    /* margin: 1rem 0; */
   }
   
   .headingMd {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: 500;
   }
   
+  .headingFlashCard {
+    font-size: 5rem;
+  }
+
   .borderCircle {
     border-radius: 99px;
   }
@@ -15,8 +21,8 @@
     border: 2px solid rgb(75 70 74);
     border-radius: 0.5em;
 
-    display: grid;
-    place-items: center;
+    /* display: grid; */
+    /* place-items: center; */
     text-align: center;
     margin: 1rem;
     width: 25rem;
@@ -26,8 +32,8 @@
     border: 2px solid rgb(75 70 74);
     border-radius: 0.5em;
 
-    display: grid;
-    place-items: center;
+    /* display: grid; */
+    /* place-items: center; */
     text-align: center;
     margin: 1rem;
     width: 5rem;
@@ -37,7 +43,19 @@
     border: 2px solid rgb(75 70 74);
     border-radius: 0.5em;
 
-    display: grid;
-    place-items: center;
+    /* display: grid; */
+    /* place-items: center; */
     text-align: center;
+  }
+
+  .containerFlashCard {
+    border: 2px solid rgb(75 70 74);
+    border-radius: 0.5em;
+    place-content: center;
+    /* display: grid; */
+    /* place-items: center; */
+    text-align: center;
+    margin: 1rem;
+    width: 25rem;
+    height: 25rem;
   }

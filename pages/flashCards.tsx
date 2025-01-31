@@ -125,13 +125,10 @@ export default function flashCards() {
               <h2 className={utilStyles.headingLg}>
                   Flash Cards
               </h2>
-              <p>click to flip flash card, click again to move to next</p>
+              <p>click flashcard to go next</p>
             </>
         </header>
       </div>
-      <div className={utilStyles.container}>
-            kanji 1
-        </div>
         {
         loading ? <div>loading data...</div> :
         <FlashCardDeck cards={flashCards}></FlashCardDeck>

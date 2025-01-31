@@ -43,7 +43,7 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
 
   return (
     <div 
-      className={utilStyles.containerSmall}
+      className={utilStyles.containerFlashCard}
       onClick={() => clickFlashCard()}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -51,9 +51,9 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
       {loading ? <p>loading...</p> :       
       hovered ? 
       <>
-        <p>{currentCard.pronounciation}</p><p>{currentCard.translation}</p> 
+        <div className={utilStyles.headingLg}>{currentCard.pronounciation}</div><div className={utilStyles.headingMd}>{currentCard.translation}</div> 
       </>
-      :  <h1>{currentCard.kanji}</h1>}
+      :  <div className={utilStyles.headingFlashCard}>{currentCard.kanji}</div>}
     </div>
   );
 }
