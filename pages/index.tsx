@@ -17,7 +17,7 @@ export default function Home({  }) {
       <Head>
           <title>{siteTitle}</title>
       </Head>
-      <Layout></Layout>
+      {/* <Layout></Layout> */}
     </>
   );
 }
