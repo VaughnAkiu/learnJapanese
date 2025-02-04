@@ -95,14 +95,16 @@ export default function chooseKanji() {
     }
 
     // todo maybe: this can be optimized , multiple loops
+    // todo maybe: address case when a checkbox was clicked then unclicked (it was added to changedData but there was no actual change) // this isnt even necessary is it?
+      // need to compare with initial data set
+      
     const learningCheckbox =  (kanjiId : number, learningParam : boolean, learnedParam : boolean) => 
     {
         const newLearningValue = !learningParam;
-        // console.log("checkbox clicked", kanjiId, data[kanjiId - 1]);
-        // for each row with given id, change row learned value
-        const newData = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learning : newLearningValue} : row);
-        // set state of card
-        setUserWordMap(newData);
+
+        const newUserWordMap = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learning : newLearningValue} : row);
+
+        setUserWordMap(newUserWordMap);
         const changedUserWord : UserWord = 
         {
           word_object_id : kanjiId,
@@ -119,6 +121,8 @@ export default function chooseKanji() {
           for(let i = 0; i < changedUserData.length; i++) {
             // if already exists, edit existing entry
             if (changedUserData[i].word_object_id == kanjiId) {
+              
+
               const newChangedUserData : UserWord[] = changedUserData.map((userWord) => userWord.word_object_id == kanjiId ? {...userWord, learning : newLearningValue} : userWord );
               setChangedUserData(newChangedUserData);
               changedEntryAlreadyExists = true;
@@ -127,13 +131,7 @@ export default function chooseKanji() {
           }
           // if doesnt already exist add a new entry
           if(!changedEntryAlreadyExists) {
-            const newChangedUserData : UserWord = 
-            {
-              word_object_id : kanjiId,
-              learned : learnedParam,
-              learning : newLearningValue
-            };
-            setChangedUserData((changedUserData) => [...changedUserData, newChangedUserData]);
+            setChangedUserData((changedUserData) => [...changedUserData, changedUserWord]);
           }
         }
         // if no objects, create the first changed object and insert
@@ -141,62 +139,99 @@ export default function chooseKanji() {
         {
           const newChangedUserData : UserWord[] = 
           [
-            {
-              word_object_id : kanjiId,
-              learned : learnedParam,
-              learning : newLearningValue
-            }
+            changedUserWord
           ];
           setChangedUserData(newChangedUserData);
         }
-
-
     }
 
     // todo maybe: this can be optimized , multiple loops
     const learnedCheckbox =  (kanjiId : number, learnedParam : boolean, learningParam : boolean) => 
     {
       const newLearnedValue = !learnedParam;
-        // console.log("checkbox clicked", kanjiId, data[kanjiId - 1]);
-        // for each row with given id, change row learned value
-        const newData = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learned : newLearnedValue} : row);
-        // set state of card
-        setUserWordMap(newData);
+
+      const newUserWordMap = userWordMap.map((row) => row.word_object_id === kanjiId ? {...row, learned : newLearnedValue} : row);
+
+      setUserWordMap(newUserWordMap);
+
+      const changedUserWord : UserWord = 
+      {
+        word_object_id : kanjiId,
+        learned : newLearnedValue,
+        learning : learningParam
+      };
+
+
+      // add row to changed user data
+      // check is changed user data has any objects
+      if (changedUserData && changedUserData.length > 0) 
+      {
+        let changedEntryAlreadyExists = false;
+        for(let i = 0; i < changedUserData.length; i++) {
+          // if already exists, edit existing entry
+          if (changedUserData[i].word_object_id == kanjiId) {
+            
+
+            const newChangedUserData : UserWord[] = changedUserData.map((userWord) => userWord.word_object_id == kanjiId ? {...userWord, learned : newLearnedValue} : userWord );
+            setChangedUserData(newChangedUserData);
+            changedEntryAlreadyExists = true;
+            break;
+          }
+        }
+        // if doesnt already exist add a new entry
+        if(!changedEntryAlreadyExists) {
+          setChangedUserData((changedUserData) => [...changedUserData, changedUserWord]);
+        }
+      }
+      // if no objects, create the first changed object and insert
+      else
+      {
+        const newChangedUserData : UserWord[] = 
+        [
+          changedUserWord
+        ];
+        setChangedUserData(newChangedUserData);
+      }
     }
 
-    // todo: address case when a checkbox was clicked then unclicked (it was added to changedData but there was no actual change)
-    const calculateDatabaseTransaction = (changedData : UserWord[]) => {
+
+    const calculateDatabaseTransaction = () => {
       let inserts : UserWord[] = [];
       let updates : UserWord[] = [];
+      // let deletes : UserWord[] = [];
 
       // need to keep track of new inserts and updates to existing rows
       // updates to existing rows
-        //compare all changes with initial changes variable
-        for(let i = 0; i < changedData.length; i++) {
+      //compare all changes with initial changes variable
+      if(changedUserData) {
+        for(let i = 0; i < changedUserData.length; i++) {
           let updateableEntryExists = false;
           for(let j = 0; j < userWordsData.length; j++) {
             // check if userWords object id already existed, if so add to updates, if not add to inserts
-
-            if(changedData[i].word_object_id == userWordsData[j].word_object_id) {
-              updates.push(changedData[i]);
+  
+            if(changedUserData[i].word_object_id == userWordsData[j].word_object_id) {
+              updates.push(changedUserData[i]);
               updateableEntryExists = true;
                             // todo maybe: if id existed and both learning / learned are false consider deleting entry. would decrease db table size (negligible) and also increase identity column usage
             }
           }
-
+  
           // check if userWords object id already existed, if not add to inserts
           if(!updateableEntryExists) {
-            inserts.push(changedData[i]);
+            inserts.push(changedUserData[i]);
           }
         }
+      }
       
-        //update inserts / updates in state or return two arrays (tuple)
-
+      //update inserts / updates in state or return two arrays (tuple)
+      return [inserts, updates];
 
     }
 
     const submitButton = async () =>
     {
+      const [inserts, updates] = calculateDatabaseTransaction();
+      console.log("inserts", inserts, "updates", updates);
       const requestBody : UserWord[] = [
         {
           word_object_id: 1,
@@ -216,9 +251,9 @@ export default function chooseKanji() {
         headers: {},
         body: JSON.stringify(requestBody),
       };
-      console.log('submit button,', request);
+      // console.log('submit button,', request);
       // compares initial data with changed data and posts a query to change the db accordingly
-      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
+      // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
       // or i could make a object that holds the changes as they are made (better i think)
     }
 
