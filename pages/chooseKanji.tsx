@@ -112,9 +112,9 @@ export default function chooseKanji() {
 
 
         // add row to changed user data
-        // what if row already existed? multiple of the same row. we have to check to see if the row already exists, if it does then update that value
-        // possible access undefined
-        if (changedUserData.length > 0) {
+        // check is changed user data has any objects
+        if (changedUserData && changedUserData.length > 0) 
+        {
           let changedEntryAlreadyExists = false;
           for(let i = 0; i < changedUserData.length; i++) {
             // if already exists, edit existing entry
@@ -136,7 +136,9 @@ export default function chooseKanji() {
             setChangedUserData((changedUserData) => [...changedUserData, newChangedUserData]);
           }
         }
-        else{
+        // if no objects, create the first changed object and insert
+        else
+        {
           const newChangedUserData : UserWord[] = 
           [
             {
@@ -162,6 +164,7 @@ export default function chooseKanji() {
         setUserWordMap(newData);
     }
 
+    // todo: address case when a checkbox was clicked then unclicked (it was added to changedData but there was no actual change)
     const calculateDatabaseTransaction = (changedData : UserWord[]) => {
       let inserts : UserWord[] = [];
       let updates : UserWord[] = [];
@@ -219,6 +222,11 @@ export default function chooseKanji() {
       // or i could make a object that holds the changes as they are made (better i think)
     }
 
+    const testButton = () =>
+    {
+      console.log("testing learningCheckbox, keeping track of changed", changedUserData);
+    }
+
 
     return (
         <>
@@ -269,6 +277,7 @@ export default function chooseKanji() {
         </table>
         </div>
         <button onClick={() => submitButton()}>submit</button>
+        <button onClick={() => testButton()}>test</button>
         </>
       );
   }
