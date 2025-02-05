@@ -22,29 +22,31 @@ export default function chooseKanji() {
   
     // todo: less calls to the database?
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-          const wordObjectResult = await wordObjectResponse.json();
-          const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-          const userWordsResult = await userWordsResponse.json();
-
-          // Assuming all `result.rows` contains the desired data
-          // setInitialData(result.rows);
-          // setData(result.rows); 
-          setUserWordsData(userWordsResult.rows);
-          const userWordMap = createUserDataMap(wordObjectResult.rows, userWordsResult.rows);
-          setInitialUserWordMap(userWordMap);
-          setUserWordMap(userWordMap);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchData();
+      loadAllData();
     }, []);
+
+    const loadAllData = async () => {
+      try {
+        setLoading(true);
+        const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
+        const wordObjectResult = await wordObjectResponse.json();
+        const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
+        const userWordsResult = await userWordsResponse.json();
+
+        // Assuming all `result.rows` contains the desired data
+        // setInitialData(result.rows);
+        // setData(result.rows); 
+        setUserWordsData(userWordsResult.rows);
+        const userWordMap = createUserDataMap(wordObjectResult.rows, userWordsResult.rows);
+        // setInitialUserWordMap(userWordMap);
+        setUserWordMap(userWordMap);
+        setChangedUserData([]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
     // better to combine data then to use nested loops during render
     const createUserDataMap = (kanjiCards : Card[], userWords : UserWord[]) =>
@@ -235,18 +237,19 @@ export default function chooseKanji() {
     {
       const [inserts, updates] = calculateDatabaseTransaction();
       console.log("inserts", inserts, "updates", updates);
-      const requestBody : UserWord[] = [
-        {
-          word_object_id: 1,
-          learning: true,
-          learned: false,
-        },
-        {
-          word_object_id: 2,
-          learning: true,
-          learned: false,
-        },
-      ];
+      // const requestBody : UserWord[] = [
+      //   {
+      //     word_object_id: 1,
+      //     learning: true,
+      //     learned: false,
+      //   },
+      //   {
+      //     word_object_id: 2,
+      //     learning: true,
+      //     learned: false,
+      //   },
+      // ];
+      const requestBody = "Attempting to post data..."
 
       const headers = {
         "inserts": JSON.stringify(inserts),
@@ -257,12 +260,15 @@ export default function chooseKanji() {
       {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify(requestBody),
+        body: requestBody,
       };
       // console.log('submit button,', request);
       // compares initial data with changed data and posts a query to change the db accordingly
       const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
       // or i could make a object that holds the changes as they are made (better i think)
+
+      // refresh data on the page
+      await loadAllData();
     }
 
     const testButton = () =>
