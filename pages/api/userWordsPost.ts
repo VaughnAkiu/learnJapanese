@@ -14,7 +14,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     console.log('updates headers', headerUpdates);
     console.log("inserts headers", headerInserts);
 
-    const queryData =  await pool.query('SELECT * FROM public.user_words');
+
     // const queryData =  await pool.query('INSERT INTO public.user_words (word_object_id, learning, learned) VALUES (1, true, false);');
     let insertString = 'INSERT INTO public.user_words (word_object_id, learning, learned) VALUES';
     for(let i = 0; i < headerInserts.length; i++){
@@ -34,10 +34,34 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
     updateString += ') AS tt (word_object_id, learning, learned) WHERE U.word_object_id = tt.word_object_id;';
     console.log(updateString);
-    response.status(200).json(queryData);
+
+    const queryResult = await Promise.all([
+      pool.query(insertString),
+      pool.query(updateString),
+    ]);
+
+    response.status(200).json(queryResult);
 
   } catch (error) {
-    response.status(500).json({ message: 'failed to load data', error: error.message })
+    response.status(500).json({ message: 'failed to post data', error: error.message })
 
   }
 };
+
+// todo: consider using a transaction
+// transaction sample code
+// const client = await pool.connect(); // Get a client for the transaction
+//   try {
+//     await client.query("BEGIN"); // Start transaction
+
+//     await client.query("UPDATE users SET status = 'active' WHERE id = 1");
+//     await client.query("UPDATE users SET status = 'inactive' WHERE id = 2");
+
+//     await client.query("COMMIT"); // Commit transaction
+//     res.status(200).json({ message: "Transaction committed" });
+//   } catch (error) {
+//     await client.query("ROLLBACK"); // Undo changes on error
+//     res.status(500).json({ error: "Transaction failed" });
+//   } finally {
+//     client.release(); // Release client back to pool
+//   }
