@@ -19,6 +19,7 @@
 
   .container {
     border: 2px solid rgb(75 70 74);
+    background-color: lightslategray;
     border-radius: 0.5em;
 
     /* display: grid; */
@@ -30,6 +31,7 @@
 
   .containerSmall {
     border: 2px solid rgb(75 70 74);
+    background-color: lightslategray;
     border-radius: 0.5em;
 
     /* display: grid; */
@@ -41,6 +43,7 @@
 
   .containerChooseKanji {
     border: 2px solid rgb(75 70 74);
+    background-color: lightslategray;
     border-radius: 0.5em;
 
     /* display: grid; */
@@ -50,6 +53,7 @@
 
   .containerFlashCard {
     border: 2px solid rgb(75 70 74);
+    background-color: lightslategray;
     border-radius: 0.5em;
     place-content: center;
     /* display: grid; */
