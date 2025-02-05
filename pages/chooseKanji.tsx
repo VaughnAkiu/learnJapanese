@@ -248,15 +248,20 @@ export default function chooseKanji() {
         },
       ];
 
+      const headers = {
+        "inserts": JSON.stringify(inserts),
+        "updates": JSON.stringify(updates),
+      };
+
       const request =
       {
         method: 'POST',
-        headers: {},
+        headers: headers,
         body: JSON.stringify(requestBody),
       };
       // console.log('submit button,', request);
       // compares initial data with changed data and posts a query to change the db accordingly
-      // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
+      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
       // or i could make a object that holds the changes as they are made (better i think)
     }
 
