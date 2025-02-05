@@ -210,9 +210,12 @@ export default function chooseKanji() {
             // check if userWords object id already existed, if so add to updates, if not add to inserts
   
             if(changedUserData[i].word_object_id == userWordsData[j].word_object_id) {
-              updates.push(changedUserData[i]);
+              // also make sure the changed values are not the same as the initial values currently in the db (updating a row with the same values)
+              if(changedUserData[i].learned != userWordsData[j].learned || changedUserData[i].learning != userWordsData[j].learning) {
+                updates.push(changedUserData[i]);
+                              // todo maybe: if id existed and both learning / learned are false consider deleting entry. would decrease db table size (negligible) and also increase identity column usage
+              }
               updateableEntryExists = true;
-                            // todo maybe: if id existed and both learning / learned are false consider deleting entry. would decrease db table size (negligible) and also increase identity column usage
             }
           }
   
