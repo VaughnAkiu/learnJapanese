@@ -31,18 +31,18 @@ export default function Layout({ }) {
   }, []);
 
 
-  const populateCards = async () => {
-    let cards : Card[] = kanjiData;
+  // const populateCards = async () => {
+  //   let cards : Card[] = kanjiData;
     
-    const response = await fetch('http://localhost:3000/api/wordObjectGet');
-    const data = await response.json();
+  //   const response = await fetch('http://localhost:3000/api/wordObjectGet');
+  //   const data = await response.json();
 
-    if(data.rows.length > 0) {
-      cards = data.rows;
-    }
+  //   if(data.rows.length > 0) {
+  //     cards = data.rows;
+  //   }
 
-    return cards;
-  }
+  //   return cards;
+  // }
 
 
   const testButton = async () => {
@@ -83,6 +83,8 @@ export default function Layout({ }) {
               kanji = {item.kanji}
               pronounciation= {item.pronounciation}
               translation = {item.translation}
+              example = {item.example}
+              example_translation={item.example_translation}
             >
             </WordCard>
           )

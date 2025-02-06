@@ -5,6 +5,8 @@ type UserWordMap = {
     kanji: string
     pronounciation: string
     translation: string
+    example: string
+    example_translation: string
     learning: boolean
     learned: boolean
 };
