@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
 
 const FlashCardDeck = ({cards} : {cards : Card[]}) => {
-  const [hovered, setHovered] = useState(false);
+  // const [hovered, setHovered] = useState(false);
+  const [flipped, setFlipped] = useState(false);
 
   const [currentCard, setCurrentCard] = useState<Card>();
   const [deckCopy, setDeckCopy] = useState<Card[]>();
@@ -23,6 +24,10 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
     }, []);
 
   const clickFlashCard = () => {
+    setFlipped(!flipped);
+  }
+
+  const clickNextButton = () => {
     // create a copy of deck
     // pop off top card of deck and show it
       // setCurrentCard(deckCopy.pop());
@@ -42,20 +47,28 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
   }
 
   return (
-    <div 
+    <>
+        <div 
       className={utilStyles.containerFlashCard}
       onClick={() => clickFlashCard()}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      // onMouseEnter={() => setHovered(true)}
+      // onMouseLeave={() => setHovered(false)}
     >
       {loading ? <p>loading...</p> :       
-      hovered ? 
+      flipped ? 
       <>
-        <div className={utilStyles.headingLg}>{currentCard.pronounciation}</div><div className={utilStyles.headingMd}>{currentCard.translation}</div> 
+        <div className={utilStyles.headingLg}>{currentCard.pronounciation}</div>
+        <div className={utilStyles.headingMd}>{currentCard.translation}</div> 
+        <div className={utilStyles.headingMd}>{currentCard.example}</div>
+        <div className={utilStyles.headingMd}>{currentCard.example_translation}</div>  
       </>
       :  <div className={utilStyles.headingFlashCard}>{currentCard.kanji}</div>}
     </div>
+    <button onClick={() => clickNextButton()}>Next</button>
+    </>
   );
+
+
 }
 
 

@@ -125,7 +125,7 @@ export default function flashCards() {
               <h2 className={utilStyles.headingLg}>
                   Flash Cards
               </h2>
-              <p>click flashcard to go next</p>
+              <p>click flashcard to flip</p>
             </>
         </header>
       </div>
