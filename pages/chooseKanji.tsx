@@ -8,14 +8,10 @@ import UserWordMap from '../objects/userWordMapObject'
 export default function chooseKanji() {
 
     // kanji cards have no reason to be grabbed multiple times. it is an immutable dataset
-    // todo: update
-    const [initialData, setInitialData] = useState<Card[]>();
-    const [data, setData] = useState<Card[]>();
 
     const [userWordsData, setUserWordsData] = useState<UserWord[]>();
     const [changedUserData, setChangedUserData] = useState<UserWord[]>();
 
-    const [initialUserWordMap, setInitialUserWordMap] = useState<UserWordMap[]>();
     const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
 
     const [loading, setLoading] = useState(true);
@@ -33,12 +29,9 @@ export default function chooseKanji() {
         const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
         const userWordsResult = await userWordsResponse.json();
 
-        // Assuming all `result.rows` contains the desired data
-        // setInitialData(result.rows);
-        // setData(result.rows); 
+
         setUserWordsData(userWordsResult.rows);
         const userWordMap = createUserDataMap(wordObjectResult.rows, userWordsResult.rows);
-        // setInitialUserWordMap(userWordMap);
         setUserWordMap(userWordMap);
         setChangedUserData([]);
       } catch (error) {
@@ -101,9 +94,6 @@ export default function chooseKanji() {
     }
 
     // todo maybe: this can be optimized , multiple loops
-    // todo maybe: address case when a checkbox was clicked then unclicked (it was added to changedData but there was no actual change) // this isnt even necessary is it?
-      // need to compare with initial data set
-      
     const learningCheckbox =  (kanjiId : number, learningParam : boolean, learnedParam : boolean) => 
     {
         const newLearningValue = !learningParam;
@@ -206,20 +196,17 @@ export default function chooseKanji() {
       let updates : UserWord[] = [];
       // let deletes : UserWord[] = [];
 
-      // need to keep track of new inserts and updates to existing rows
-      // updates to existing rows
       //compare all changes with initial changes variable
       if(changedUserData) {
         for(let i = 0; i < changedUserData.length; i++) {
           let updateableEntryExists = false;
           for(let j = 0; j < userWordsData.length; j++) {
             // check if userWords object id already existed, if so add to updates, if not add to inserts
-  
             if(changedUserData[i].word_object_id == userWordsData[j].word_object_id) {
               // also make sure the changed values are not the same as the initial values currently in the db (updating a row with the same values)
               if(changedUserData[i].learned != userWordsData[j].learned || changedUserData[i].learning != userWordsData[j].learning) {
                 updates.push(changedUserData[i]);
-                              // todo maybe: if id existed and both learning / learned are false consider deleting entry. would decrease db table size (negligible) and also increase identity column usage
+                // todo maybe: if id existed and both learning / learned are false consider deleting entry. would decrease db table size (negligible) and also increase identity column usage
               }
               updateableEntryExists = true;
             }
@@ -241,18 +228,7 @@ export default function chooseKanji() {
     {
       const [inserts, updates] = calculateDatabaseTransaction();
       console.log("inserts", inserts, "updates", updates);
-      // const requestBody : UserWord[] = [
-      //   {
-      //     word_object_id: 1,
-      //     learning: true,
-      //     learned: false,
-      //   },
-      //   {
-      //     word_object_id: 2,
-      //     learning: true,
-      //     learned: false,
-      //   },
-      // ];
+
       const requestBody = "Attempting to post data..."
 
       const headers = {
@@ -266,12 +242,8 @@ export default function chooseKanji() {
         headers: headers,
         body: requestBody,
       };
-      // console.log('submit button,', request);
-      // compares initial data with changed data and posts a query to change the db accordingly
-      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
-      // or i could make a object that holds the changes as they are made (better i think)
 
-      // refresh data on the page
+      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
       await loadAllData();
     }
 
