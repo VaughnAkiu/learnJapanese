@@ -3,21 +3,11 @@ import utilStyles from '../styles/utils.module.css';
 import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
-import UserWordMap from '../objects/userWordMapObject'
-import WordCard from '../components/wordCardComponent';
 import FlashCardDeck from '../components/flashCardDeckComponent';
 
 export default function flashCards() {
 
-    const [initialData, setInitialData] = useState<Card[]>();
-    const [data, setData] = useState<Card[]>();
     const [flashCards, setFlashCards] = useState<Card[]>();
-
-    const [userWordsData, setUserWordsData] = useState<UserWord[]>();
-
-    const [initialUserWordMap, setInitialUserWordMap] = useState<UserWordMap[]>();
-    const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
-
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -28,10 +18,6 @@ export default function flashCards() {
           const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
           const userWordsResult = await userWordsResponse.json();
 
-          // Assuming all `result.rows` contains the desired data
-          // setInitialData(result.rows);
-          // setData(result.rows); 
-          // setUserWordsData(userWordsResult.rows);
           const flashCards = createFlashCards(result.rows, userWordsResult.rows);
           shuffleCards(flashCards);
           setFlashCards(flashCards);

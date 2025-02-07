@@ -9,6 +9,7 @@ type UserWordMap = {
     example_translation: string
     learning: boolean
     learned: boolean
+    // user_id: number
 };
 
 export default UserWordMap;

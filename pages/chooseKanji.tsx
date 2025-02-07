@@ -64,7 +64,7 @@ export default function chooseKanji() {
               pronounciation : kanjiCards[i].pronounciation,
               translation : kanjiCards[i].translation,
               example : kanjiCards[i].example,
-              example_translation : kanjiCards[i].example_translation
+              example_translation : kanjiCards[i].example_translation,
             };
             userWordMap.push(userWordMapPiece);
             wordCreated = true;
@@ -105,7 +105,8 @@ export default function chooseKanji() {
         {
           word_object_id : kanjiId,
           learned : learnedParam,
-          learning : newLearningValue
+          learning : newLearningValue,
+          // user_id : 
         };
 
 
