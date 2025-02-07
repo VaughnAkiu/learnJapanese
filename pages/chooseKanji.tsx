@@ -106,7 +106,7 @@ export default function chooseKanji() {
           word_object_id : kanjiId,
           learned : learnedParam,
           learning : newLearningValue,
-          // user_id : 
+          user_id : 1, // todo: hardcoded for testing
         };
 
 
@@ -155,7 +155,8 @@ export default function chooseKanji() {
       {
         word_object_id : kanjiId,
         learned : newLearnedValue,
-        learning : learningParam
+        learning : learningParam,
+        user_id : 1, // todo: hardcoded for testing
       };
 
 
