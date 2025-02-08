@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import utilStyles from '../styles/utils.module.css';
 import WordCard from './wordCardComponent';
-import kanjiData from '../public/data/kanji.json';
 import Card from '../objects/wordCardObject'
 
 

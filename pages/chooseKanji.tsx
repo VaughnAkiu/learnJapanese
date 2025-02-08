@@ -7,7 +7,7 @@ import UserWordMap from '../objects/userWordMapObject'
 
 export default function chooseKanji() {
 
-    // kanji cards have no reason to be grabbed multiple times. it is an immutable dataset
+    // user kanji-word cards have no reason to be grabbed multiple times. it is an immutable dataset
 
     const [userWordsData, setUserWordsData] = useState<UserWord[]>();
     const [changedUserData, setChangedUserData] = useState<UserWord[]>();
