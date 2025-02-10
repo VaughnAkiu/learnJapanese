@@ -3,7 +3,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "sso": "aws sso login --sso-session=test-sso"
   },
   "dependencies": {
     "@types/react": "^19.0.2",
