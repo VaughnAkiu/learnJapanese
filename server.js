@@ -16,7 +16,7 @@ const { Pool, Client } = pg
 // });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL2,
   ssl: true,
 });
 
