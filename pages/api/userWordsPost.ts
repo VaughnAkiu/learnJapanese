@@ -23,10 +23,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
 
     // const queryData =  await pool.query('INSERT INTO public.user_words (word_object_id, learning, learned) VALUES (1, true, false);');
-    let insertString = 'INSERT INTO public.user_words (word_object_id, learning, learned) VALUES';
+    let insertString = 'INSERT INTO public.user_words (word_object_id, learning, learned, user_id) VALUES';
     if(headerInserts.length > 0) {
       for(let i = 0; i < headerInserts.length; i++){
-        insertString += ' (' + headerInserts[i].word_object_id + ', ' + headerInserts[i].learning + ', ' + headerInserts[i].learned + ')';
+        insertString += ' (' + headerInserts[i].word_object_id + ', ' + headerInserts[i].learning + ', ' + headerInserts[i].learned + ', ' + headerInserts[i].user_id + ')';
         if(i != headerInserts.length - 1) {
           insertString += ','
         }
