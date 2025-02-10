@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import pool from '../../server.js';
+import pool from '../../dbconnection.js';
 import UserWord from '../../objects/userWordObject'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
