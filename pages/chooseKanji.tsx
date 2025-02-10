@@ -247,7 +247,8 @@ export default function chooseKanji() {
         body: requestBody,
       };
 
-      const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
+      // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
+      const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsPost', request);
       await loadAllData();
     }
 
