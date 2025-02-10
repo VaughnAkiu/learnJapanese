@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import pool from '../../dbconnection.js';
+import pool from '../../dbconnection';
 // import kanjiData from '/kanji';
 // import kanjiData from '../public/data/kanji.json';
 
