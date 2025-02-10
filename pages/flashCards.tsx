@@ -15,10 +15,10 @@ export default function flashCards() {
         try {
           setLoading(true);
           // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-          const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/wordObjectGet');
+          const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
           const wordObjectResult = await wordObjectResponse.json();
           // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-          const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/userWordsGet');
+          const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
           const userWordsResult = await userWordsResponse.json();
 
           const flashCards = createFlashCards(wordObjectResult.rows, userWordsResult.rows);
