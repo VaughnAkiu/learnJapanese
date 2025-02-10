@@ -13,12 +13,15 @@ export default function flashCards() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:3000/api/wordObjectGet');
-          const result = await response.json();
-          const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
+          setLoading(true);
+          // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
+          const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/wordObjectGet');
+          const wordObjectResult = await wordObjectResponse.json();
+          // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
+          const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/userWordsGet');
           const userWordsResult = await userWordsResponse.json();
 
-          const flashCards = createFlashCards(result.rows, userWordsResult.rows);
+          const flashCards = createFlashCards(wordObjectResult.rows, userWordsResult.rows);
           shuffleCards(flashCards);
           setFlashCards(flashCards);
         } catch (error) {
