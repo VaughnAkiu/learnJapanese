@@ -14,11 +14,14 @@ export default function flashCards() {
       const fetchData = async () => {
         try {
           setLoading(true);
+          
           // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-          const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
+          // const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
+          const wordObjectResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet');
           const wordObjectResult = await wordObjectResponse.json();
           // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-          const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
+          // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
+          const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
           const userWordsResult = await userWordsResponse.json();
 
           const flashCards = createFlashCards(wordObjectResult.rows, userWordsResult.rows);
@@ -102,12 +105,6 @@ export default function flashCards() {
 
     return (
         <>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="chooseKanji">Choose Kanji</Link>
-          </li>
           <div className={utilStyles.container}>
         <header>
             <>
@@ -115,6 +112,14 @@ export default function flashCards() {
                   Flash Cards
               </h2>
               <p>click flashcard to flip</p>
+              <li>
+              <Link href="/">Home</Link>
+              </li>
+                <p>Back to home page...</p>
+              <li>
+                <Link href="chooseKanji">Choose Kanji</Link>
+                <p>pick the kanji you want to show up in your flash card deck...</p>
+              </li>
             </>
         </header>
       </div>

@@ -15,6 +15,7 @@ export default function chooseKanji() {
     const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
 
     const [loading, setLoading] = useState(true);
+    const [count, setCount] = useState(0);
   
     // todo: less calls to the database?
     useEffect(() => {
@@ -25,10 +26,14 @@ export default function chooseKanji() {
       try {
         setLoading(true);
         // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-        const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
+        // const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
+        const urlString = process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet';
+        // console.log('urlString: ', urlString);
+        const wordObjectResponse = await fetch(urlString);
         const wordObjectResult = await wordObjectResponse.json();
         // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-        const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
+        // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
+        const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
         const userWordsResult = await userWordsResponse.json();
 
 
@@ -248,31 +253,39 @@ export default function chooseKanji() {
       };
 
       // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
-      const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsPost', request);
+      // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsPost', request);
+      const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsPost', request);
       await loadAllData();
     }
 
     const testButton = () =>
     {
       console.log("testing learningCheckbox, keeping track of changed", changedUserData);
+      // setCount(count + 1);
+      // setCount(count + 1);
+      // console.log(count);
     }
 
 
     return (
         <>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="flashCards">Flash Cards</Link>
-          </li>
           <div className={utilStyles.container}>
         <header>
             <>
               <h2 className={utilStyles.headingLg}>
                   Choose your kanji
               </h2>
-              <p>fill in checkboxes and submit to update the main list</p>
+              <p>fill in checkboxes and submit to update your flash card deck...</p>
+              <p>learning = add to flash card deck. learned = no functionality yet.</p>
+              <li>
+              <Link href="/">Home</Link>
+              </li>
+              <p>Back to home page...</p>
+              <li>
+                <Link href="flashCards">Flash Cards</Link>
+              </li>
+              <p>go to your flash card deck...</p>
+              {/* <p>{count}</p> */}
             </>
         </header>
       </div>
@@ -307,7 +320,7 @@ export default function chooseKanji() {
         </table>
         </div>
         <button onClick={() => submitButton()}>submit</button>
-        <button onClick={() => testButton()}>test</button>
+        {/* <button onClick={() => testButton()}>test</button> */}
         </>
       );
   }
