@@ -18,7 +18,7 @@
   }
 
   .container {
-    border: 2px solid rgb(75 70 74);
+    border: 5px solid lightslategray;
     background-color: lightslategray;
     border-radius: 0.5em;
 
@@ -26,11 +26,11 @@
     /* place-items: center; */
     text-align: center;
     margin: 1rem;
-    width: 35rem;
+    /* width: 30rem; */
   }
 
   .containerSmall {
-    border: 2px solid rgb(75 70 74);
+    border: 5px solid lightslategray;
     background-color: lightslategray;
     border-radius: 0.5em;
 
@@ -42,7 +42,7 @@
   }
 
   .containerChooseKanji {
-    border: 2px solid rgb(75 70 74);
+    border: 5px solid lightslategray;
     background-color: lightslategray;
     border-radius: 0.5em;
 
@@ -52,7 +52,7 @@
   }
 
   .containerFlashCard {
-    border: 2px solid rgb(75 70 74);
+    border: 5px solid lightslategray;
     background-color: lightslategray;
     border-radius: 0.5em;
     place-content: center;
