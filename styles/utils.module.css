@@ -30,7 +30,7 @@
   }
 
   .containerSmall {
-    border: 5px solid lightslategray;
+    border: 2px solid lightslategray;
     background-color: lightslategray;
     border-radius: 0.5em;
 
@@ -38,7 +38,23 @@
     /* place-items: center; */
     text-align: center;
     margin: 1rem;
-    width: 5rem;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+  }
+
+  .containerLogin {
+    border: 2px solid lightslategray;
+    background-color: lightslategray;
+    border-radius: 0.5em;
+
+    /* display: grid; */
+    /* place-items: center; */
+    text-align: center;
+    margin: 1rem;
+    /* width: 3rem; */
+    /* height: 3rem; */
+    cursor: pointer;
   }
 
   .containerChooseKanji {
