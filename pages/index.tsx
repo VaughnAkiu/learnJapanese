@@ -3,11 +3,19 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import utilStyles from '../styles/utils.module.css';
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useState } from 'react';
+import Modal from '../components/modal';
 
 const siteTitle = 'Learn Japanese';
 
 export default function Home({  }) {
   const { data: session } = useSession();
+  const [showModal, setShowModal] = useState(false);
+
+  const signInButtonClick = () => {
+    signIn();
+    setShowModal(false);
+  };
 
     return (
       <>
@@ -19,10 +27,14 @@ export default function Home({  }) {
           </div>
           
         : 
-          <div className={utilStyles.containerLogin} onClick={() => signIn()}>
+          <div className={utilStyles.containerLogin} onClick={() => setShowModal(true)}>
               Sign in
           </div>
         }
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <h2>Sign In</h2>
+        <button onClick={signInButtonClick}>Sign in with your account</button>
+      </Modal>
         <Head>
             <title>{siteTitle}</title>
         </Head>
