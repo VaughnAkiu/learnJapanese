@@ -9,19 +9,18 @@ const siteTitle = 'Learn Japanese';
 export default function Home({  }) {
   const { data: session } = useSession();
 
-  // if (session) {
     return (
       <>
         {session ? 
           
           <div className={utilStyles.containerLogin} onClick={() => signOut()}>
-            <p>Signed in as {session.user.name}. </p>
-            <p>Click to sign out...</p>
+            Signed in as {session.user.name}.<br/>
+            Click to sign out...
           </div>
           
         : 
           <div className={utilStyles.containerLogin} onClick={() => signIn()}>
-              <h3>Sign in </h3>
+              Sign in
           </div>
         }
         <Head>
@@ -35,17 +34,17 @@ export default function Home({  }) {
                 <li>
                 <Link href="chooseKanji">Choose Kanji</Link>
                 </li>
-                <p>pick the kanji you want to show up in your flash card deck...</p>
+                pick the kanji you want to show up in your flash card deck...
+                <p></p>
                 <li>
                   <Link href="flashCards">Flash Cards</Link>
                 </li>
-                <p>go to your flash card deck...</p>
-         
+                go to your flash card deck...
         </div>
         {/* <Layout></Layout> */}
       </>
     )
-  // }
+
   return (
     <>
 

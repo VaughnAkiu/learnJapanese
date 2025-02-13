@@ -280,11 +280,12 @@ export default function chooseKanji() {
               <li>
               <Link href="/">Home</Link>
               </li>
-              <p>Back to home page...</p>
+              Back to home page...
+              <p></p>
               <li>
                 <Link href="flashCards">Flash Cards</Link>
               </li>
-              <p>go to your flash card deck...</p>
+              go to your flash card deck...
               {/* <p>{count}</p> */}
             </>
         </header>
@@ -319,7 +320,7 @@ export default function chooseKanji() {
             </tbody>
         </table>
         </div>
-        <button onClick={() => submitButton()}>submit</button>
+        <div className={utilStyles.containerLogin} onClick={() => submitButton()}>submit</div>
         {/* <button onClick={() => testButton()}>test</button> */}
         </>
       );

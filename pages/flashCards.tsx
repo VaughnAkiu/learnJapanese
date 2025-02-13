@@ -115,11 +115,12 @@ export default function flashCards() {
               <li>
               <Link href="/">Home</Link>
               </li>
-                <p>Back to home page...</p>
+                Back to home page...
+                <p></p>
               <li>
                 <Link href="chooseKanji">Choose Kanji</Link>
-                <p>pick the kanji you want to show up in your flash card deck...</p>
               </li>
+              pick the kanji you want to show up in your flash card deck...
             </>
         </header>
       </div>

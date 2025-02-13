@@ -64,7 +64,7 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
       </>
       :  <div className={utilStyles.headingFlashCard}>{currentCard.kanji}</div>}
     </div>
-    <button onClick={() => clickNextButton()}>Next</button>
+    <div className={utilStyles.containerLogin} onClick={() => clickNextButton()}>Next</div>
     </>
   );
 

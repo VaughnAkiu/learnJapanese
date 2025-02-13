@@ -43,20 +43,6 @@
     cursor: pointer;
   }
 
-  .containerLogin {
-    border: 2px solid lightslategray;
-    background-color: lightslategray;
-    border-radius: 0.5em;
-
-    /* display: grid; */
-    /* place-items: center; */
-    text-align: center;
-    margin: 1rem;
-    /* width: 3rem; */
-    /* height: 3rem; */
-    cursor: pointer;
-  }
-
   .containerChooseKanji {
     border: 5px solid lightslategray;
     background-color: lightslategray;
@@ -78,4 +64,21 @@
     margin: 1rem;
     /* width: 25rem; */
     height: 25rem;
+    cursor: pointer;
+  }
+
+  
+  .containerLogin {
+    border: 2px solid lightslategray;
+    background-color: lightslategray;
+    border-radius: 0.5em;
+
+    /* display: grid; */
+    /* place-items: center; */
+    text-align: center;
+    margin: 1rem;
+    /* width: 3rem; */
+    /* height: 3rem; */
+    cursor: pointer;
+    font-weight: 700;
   }
