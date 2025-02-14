@@ -55,8 +55,8 @@ export default function Home({  }) {
     return (
       <div>
         <h2>Please Login</h2>
-        <button onClick={() => popupCenter("/google-signin", "Sample Sign In")} >
-          Sign In with Google
+        <button onClick={() => popupCenter("/auth/sign_in", "Sample Sign In")} >
+          Sign In
         </button>
       </div>
     )
@@ -67,7 +67,7 @@ export default function Home({  }) {
         {session ? 
           
           <div className={utilStyles.containerLogin} onClick={() => signOut()}>
-            Signed in as {session.user.name}.<br/>
+            {/* Signed in as {session.user.name}.<br/> */}
             Click to sign out...
           </div>
           
