@@ -4,6 +4,9 @@ import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import UserWordMap from '../objects/userWordMapObject'
+import Head from 'next/head';
+
+const siteTitle = 'Learn Japanese';
 
 export default function chooseKanji() {
 
@@ -268,7 +271,10 @@ export default function chooseKanji() {
 
 
     return (
-        <>
+      <>
+        <Head>
+          <title>{siteTitle}</title>
+        </Head>
           <div className={utilStyles.container}>
         <header>
             <>
@@ -322,6 +328,6 @@ export default function chooseKanji() {
         </div>
         <div className={utilStyles.containerLogin} onClick={() => submitButton()}>submit</div>
         {/* <button onClick={() => testButton()}>test</button> */}
-        </>
-      );
+      </>
+    );
   }

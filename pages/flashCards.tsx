@@ -4,6 +4,9 @@ import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import FlashCardDeck from '../components/flashCardDeckComponent';
+import Head from 'next/head';
+
+const siteTitle = 'Learn Japanese';
 
 export default function flashCards() {
 
@@ -104,7 +107,10 @@ export default function flashCards() {
   
 
     return (
-        <>
+      <>
+        <Head>
+          <title>{siteTitle}</title>
+        </Head>
           <div className={utilStyles.container}>
         <header>
             <>
@@ -127,7 +133,7 @@ export default function flashCards() {
         {
         loading ? <div>loading data...</div> :
         <FlashCardDeck cards={flashCards}></FlashCardDeck>
-      }
-        </>
+        }
+      </>
       );
   }
