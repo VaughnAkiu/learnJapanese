@@ -28,14 +28,11 @@ export default function chooseKanji() {
     const loadAllData = async () => {
       try {
         setLoading(true);
-        // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-        // const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
         const urlString = process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet';
         // console.log('urlString: ', urlString);
         const wordObjectResponse = await fetch(urlString);
         const wordObjectResult = await wordObjectResponse.json();
-        // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-        // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
+
         const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
         const userWordsResult = await userWordsResponse.json();
 
@@ -255,8 +252,6 @@ export default function chooseKanji() {
         body: requestBody,
       };
 
-      // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
-      // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsPost', request);
       const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsPost', request);
       await loadAllData();
     }
