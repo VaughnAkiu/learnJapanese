@@ -10,6 +10,23 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  callbacks: 
+  {
+    async session({ session, token }) 
+    {
+        // console.log('session token:', token);
+        session.user.id = token.sub;
+        session.user.provider = token.provider; // Store provider in session
+        return session;
+    },
+        async jwt({ token, account }) 
+    {
+        if (account) {
+            token.provider = account.provider; // Store provider in JWT token
+        }
+        return token;
+    },
+},
 }
 
 export default NextAuth(authOptions)
