@@ -3,17 +3,14 @@ import pool from '../../dbconnection';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
-    console.log('userGet attempted to run...');
-
+    console.log('userWordsPost attempted to run...');
     const userTable = process.env.DB_USER_TABLE;
-    let queryString = 'SELECT id FROM ' + userTable;
 
-    if(request.headers["github_id"]) {
-      queryString += ' WHERE github_id = ' + request.headers["github_id"].toString() + ';';
-    }
-    console.log('userGet queryString:', queryString);
-    // console.log('user table output test:', userTable);
-    const queryData =  await pool.query(queryString);
+    const headerInsert : string = request.headers["insert"].toString();
+
+    let insertString = 'INSERT INTO ' + userTable + ' (user_name) VALUES';
+
+    const queryData =  await pool.query(insertString);
 
     response.status(200).json(queryData);
   } catch (error) {

@@ -5,6 +5,7 @@ import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import UserWordMap from '../objects/userWordMapObject'
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
 
 const siteTitle = 'Learn Japanese';
 
@@ -12,17 +13,26 @@ export default function chooseKanji() {
 
     // user kanji-word cards have no reason to be grabbed multiple times. it is an immutable dataset
 
+    const { data: session, status } = useSession();
+
     const [userWordsData, setUserWordsData] = useState<UserWord[]>();
     const [changedUserData, setChangedUserData] = useState<UserWord[]>();
 
     const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
 
     const [loading, setLoading] = useState(true);
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
   
     // todo: less calls to the database?
     useEffect(() => {
       loadAllData();
+
+      if(session && session.user.name) {
+        findOrCreateUser();
+      }
+
+      console.log("choose kanji session", session);
+      console.log("choose kanji staatus", status);
     }, []);
 
     const loadAllData = async () => {
@@ -46,6 +56,33 @@ export default function chooseKanji() {
       } finally {
         setLoading(false);
       }
+    }
+
+    const findOrCreateUser = async () => {
+
+      if('provider' in session.user && 'id' in session.user && session.user.provider == "github") {
+        const headers = {
+          "github_id": `${session.user.id}`,
+        };
+        // console.log("headers findOrCreateUser", headers);
+        const requestBody = "Attempting to get user..."
+
+        const request =
+        {
+          method: 'GET',
+          headers: headers,
+          // body: requestBody,
+        };
+        
+        // check if user exists with given github unique id
+        const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+
+        // if user does not exist, create user
+
+        console.log("getUserResponse", await getUserResponse.json());
+      }
+
+
     }
 
     // better to combine data then to use nested loops during render

@@ -75,7 +75,7 @@ export default function flashCards() {
         flashCardsLocal[i] = flashCardsLocal[j];
         flashCardsLocal[j] = x;
       }
-      console.log('shuffled cards', flashCardsLocal);
+      // console.log('shuffled cards', flashCardsLocal);
       return flashCardsLocal;
     }
 
@@ -92,7 +92,7 @@ export default function flashCards() {
       for(let i = 0; i < flashCardsLocal.length; i++) {
         for(let i = 0; i < max; i++){
           rando = Math.floor(Math.random() * (max - min + 1) + min);
-          console.log('random', rando);
+          // console.log('random', rando);
         }
         max--;
       }
