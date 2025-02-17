@@ -27,12 +27,10 @@ export default function chooseKanji() {
   
     // todo: less calls to the database?
     useEffect(() => {
-      loadAllData();
-
       if(session && session.user.name) {
         findOrCreateUser();
       }
-
+      loadAllData();
       // console.log("choose kanji session", session);
       // console.log("choose kanji staatus", status);
       // console.log("choose kanji userId", userId);
@@ -46,7 +44,19 @@ export default function chooseKanji() {
         const wordObjectResponse = await fetch(urlString);
         const wordObjectResult = await wordObjectResponse.json();
 
-        const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
+        const headers = {
+          "user_id": `${userId}`,
+        };
+        // console.log("headers findOrCreateUser", headers);
+        // const requestBody = "Attempting to get user..."
+
+        const request =
+        {
+          method: 'GET',
+          headers: headers,
+          // body: requestBody,
+        };
+        const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet', request);
         const userWordsResult = await userWordsResponse.json();
 
 
