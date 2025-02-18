@@ -19,10 +19,10 @@ export const authOptions = {
     
 
         if(account.provider == "github") {
+          console.log("github signIn callback, account.provider = github true");
           const headers = {
             "github_id": `${user.id}`,
           };
-          console.log("github signIn callback, account.provider = github true");
           // const requestBody = "Attempting to get user..."
     
           const request =
@@ -33,7 +33,11 @@ export const authOptions = {
           };
           
           // check if user exists with given github unique id
+          console.log("github signIn callback, about to await promise 1000ms");
+          await new Promise(r => setTimeout(r, 1000));
+          console.log("github signIn callback, wait 1000ms success, about to fetch userGet");
           const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+          console.log("github signIn callback, fetch success, returned getUserResponse: ", getUserResponse);
           if(getUserResponse.status == 200) {
             console.log("github signIn callback, getUserResponse = success");
             const convertedGetUserResponse =  await getUserResponse.json();
