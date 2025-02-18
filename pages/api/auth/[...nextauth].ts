@@ -37,7 +37,7 @@ export const authOptions = {
           await new Promise(r => setTimeout(r, 1000));
           console.log("github signIn callback, wait 1000ms success, about to fetch userGet");
           const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
-          console.log("github signIn callback, fetch success, returned getUserResponse: ", getUserResponse);
+          console.log("github signIn callback, fetch result, returned getUserResponse: ", getUserResponse);
           if(getUserResponse.status == 200) {
             console.log("github signIn callback, getUserResponse = success");
             const convertedGetUserResponse =  await getUserResponse.json();

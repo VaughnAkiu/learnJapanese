@@ -333,13 +333,30 @@ export default function chooseKanji() {
       await loadAllData();
     }
 
-    const testButton = () =>
+    const testButton = async () =>
     {
       // console.log("testing learningCheckbox, keeping track of changed", changedUserData);
       // setCount(count + 1);
       // setCount(count + 1);
       // console.log(count);
-      console.log(userId);
+      // console.log(userId);
+
+      const headers = {
+        "github_id": `${1}`,
+      };
+      // console.log("headers findOrCreateUser", headers);
+      // const requestBody = "Attempting to get user..."
+
+      const request =
+      {
+        method: 'GET',
+        headers: headers,
+        // body: requestBody,
+      };
+      
+      // check if user exists with given github unique id
+      const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+      console.log("getUserResponse", await getUserResponse.json());
     }
 
 
@@ -400,7 +417,7 @@ export default function chooseKanji() {
         </table>
         </div>
         <div className={utilStyles.containerLogin} onClick={() => submitButton()}>submit</div>
-        {/* <button onClick={() => testButton()}>test</button> */}
+        <button onClick={() => testButton()}>test</button>
       </>
     );
   }
