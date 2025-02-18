@@ -4,7 +4,7 @@ import pool from '../../dbconnection';
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
     console.log('userWordsPost attempted to run...');
-    const userTable = process.env.DB_USER_TABLE;
+    const userTable = process.env.NEXT_PUBLIC_DB_USER_TABLE;
 
     let insertString = 'INSERT INTO ' + userTable;
     if(request.headers["github_id"]) {

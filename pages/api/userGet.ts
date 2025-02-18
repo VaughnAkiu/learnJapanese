@@ -5,7 +5,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   try {
     console.log('userGet attempted to run...');
 
-    const userTable = process.env.DB_USER_TABLE;
+    const userTable = process.env.NEXT_PUBLIC_DB_USER_TABLE;
     let queryString = 'SELECT id FROM ' + userTable;
 
     if(request.headers["github_id"]) {
