@@ -22,7 +22,7 @@ export const authOptions = {
           const headers = {
             "github_id": `${user.id}`,
           };
-          // console.log("headers findOrCreateUser", headers);
+          console.log("github signIn callback, account.provider = github true");
           // const requestBody = "Attempting to get user..."
     
           const request =
@@ -35,6 +35,7 @@ export const authOptions = {
           // check if user exists with given github unique id
           const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
           if(getUserResponse.status == 200) {
+            console.log("github signIn callback, getUserResponse = success");
             const convertedGetUserResponse =  await getUserResponse.json();
             if(convertedGetUserResponse.rows.length == 0) {
               
@@ -52,6 +53,7 @@ export const authOptions = {
             } 
               // userId = convertedGetUserResponse.rows[0].id;
               user.userId = convertedGetUserResponse.rows[0].id;
+              console.log("github signIn callback, user.userId:", user.userId);
               return true;
             // console.log("getUserResponse", await getUserResponse.json());
           }
