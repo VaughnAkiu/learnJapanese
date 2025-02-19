@@ -5,10 +5,15 @@ import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import FlashCardDeck from '../components/flashCardDeckComponent';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
 
 const siteTitle = 'Learn Japanese';
 
+// todo: bug with extra flashcard on page refresh
 export default function flashCards() {
+
+    const { data: session, status } = useSession();
+    const [userId, setUserId] = useState(1);
 
     const [flashCards, setFlashCards] = useState<Card[]>();
     const [loading, setLoading] = useState(true);
@@ -18,15 +23,40 @@ export default function flashCards() {
         try {
           setLoading(true);
           
-          // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-          // const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
           const wordObjectResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet');
           const wordObjectResult = await wordObjectResponse.json();
-          // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-          // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
-          const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
+
+          let headers = {};
+
+          console.log('chooseKanji session ', session);
+          if(session && 'user_id' in session.user  && session.user.user_id) {
+            setUserId(Number(session.user.user_id));
+            headers = {
+              "user_id": `${session.user.user_id}`,
+            };
+          } else {
+            headers = {
+              "user_id": `${userId}`,
+            };
+          } 
+          const request =
+          {
+            method: 'GET',
+            headers: headers,
+          };
+          const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet', request);
           const userWordsResult = await userWordsResponse.json();
 
+          // if no user words, add a dummy user word (to create a single flashcard as an example)
+          if(userWordsResult.rows.length == 0) {
+            const dummyUserWord : UserWord = {    
+              word_object_id: 1,
+              learning: true,
+              learned: false,
+              user_id: userId
+            };
+            userWordsResult.rows.push(dummyUserWord);
+          }
           const flashCards = createFlashCards(wordObjectResult.rows, userWordsResult.rows);
           shuffleCards(flashCards);
           setFlashCards(flashCards);
@@ -38,7 +68,7 @@ export default function flashCards() {
       };
   
       fetchData();
-    }, []);
+    }, [status, session]);
 
     // only create flash cards for objects with learning tag
     const createFlashCards = (kanjiCards : Card[], userWords : UserWord[]) =>
@@ -79,7 +109,7 @@ export default function flashCards() {
         flashCardsLocal[i] = flashCardsLocal[j];
         flashCardsLocal[j] = x;
       }
-      console.log('shuffled cards', flashCardsLocal);
+      // console.log('shuffled cards', flashCardsLocal);
       return flashCardsLocal;
     }
 
@@ -96,7 +126,7 @@ export default function flashCards() {
       for(let i = 0; i < flashCardsLocal.length; i++) {
         for(let i = 0; i < max; i++){
           rando = Math.floor(Math.random() * (max - min + 1) + min);
-          console.log('random', rando);
+          // console.log('random', rando);
         }
         max--;
       }

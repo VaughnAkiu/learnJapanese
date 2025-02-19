@@ -5,6 +5,8 @@ import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import UserWordMap from '../objects/userWordMapObject'
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
+// import { GetServerSideProps } from "next";
 
 const siteTitle = 'Learn Japanese';
 
@@ -12,31 +14,72 @@ export default function chooseKanji() {
 
     // user kanji-word cards have no reason to be grabbed multiple times. it is an immutable dataset
 
+    const { data: session, status } = useSession();
+
     const [userWordsData, setUserWordsData] = useState<UserWord[]>();
     const [changedUserData, setChangedUserData] = useState<UserWord[]>();
 
     const [userWordMap, setUserWordMap] = useState<UserWordMap[]>();
 
     const [loading, setLoading] = useState(true);
-    const [count, setCount] = useState(0);
+
+    const [userId, setUserId] = useState(1);
+    // const [count, setCount] = useState(0);
   
     // todo: less calls to the database?
     useEffect(() => {
+
+      // if(!session) {
+      //   timeout(10000);
+      //   console.log('waited 1000 ms');
+      // }
+
+      if(session && 'user_id' in session.user  && session.user.user_id) {
+        console.log('choose kanji session ', session);
+        setUserId(Number(session.user.user_id));
+        // findOrCreateUser();
+      }
       loadAllData();
-    }, []);
+      // console.log("choose kanji session", session);
+      // console.log("choose kanji staatus", status);
+      // console.log("choose kanji userId", userId);
+    }, [status, session]);
+
+    // const  timeout = async (delay: number) => {
+    //   return await new Promise( res => setTimeout(res, delay) );
+    // }
+
 
     const loadAllData = async () => {
       try {
         setLoading(true);
-        // const wordObjectResponse = await fetch('http://localhost:3000/api/wordObjectGet');
-        // const wordObjectResponse = await fetch('https://learn-japanese-livid.vercel.app/api/wordObjectGet');
         const urlString = process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet';
         // console.log('urlString: ', urlString);
         const wordObjectResponse = await fetch(urlString);
         const wordObjectResult = await wordObjectResponse.json();
-        // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsGet');
-        // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsGet');
-        const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
+
+        let headers = {};
+
+        console.log('chooseKanji session ', session);
+        if(session && 'user_id' in session.user  && session.user.user_id) {
+          headers = {
+            "user_id": `${session.user.user_id}`,
+          };
+        } else {
+          headers = {
+            "user_id": `${userId}`,
+          };
+        } 
+        // console.log("headers findOrCreateUser", headers);
+        // const requestBody = "Attempting to get user..."
+
+        const request =
+        {
+          method: 'GET',
+          headers: headers,
+          // body: requestBody,
+        };
+        const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet', request);
         const userWordsResult = await userWordsResponse.json();
 
 
@@ -49,6 +92,49 @@ export default function chooseKanji() {
       } finally {
         setLoading(false);
       }
+    }
+
+    const findOrCreateUser = async () => {
+      if('provider' in session.user && 'id' in session.user && session.user.provider == "github") {
+        const headers = {
+          "github_id": `${session.user.id}`,
+        };
+        // console.log("headers findOrCreateUser", headers);
+        // const requestBody = "Attempting to get user..."
+
+        const request =
+        {
+          method: 'GET',
+          headers: headers,
+          // body: requestBody,
+        };
+        
+        // check if user exists with given github unique id
+        const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+        if(getUserResponse.status == 200) {
+          const convertedGetUserResponse =  await getUserResponse.json();
+          if(convertedGetUserResponse.rows.length == 0) {
+            
+            const createUserRequest = {
+              method: 'POST',
+              headers: headers,
+            }
+
+            const createUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userPost', createUserRequest);
+            // console.log("createUserResponse response: ", await createUserResponse.json());
+            const convertedCreateUserResponse = await createUserResponse.json()
+            setUserId(convertedCreateUserResponse.rows[0].id);
+            return;
+          } 
+            setUserId(convertedGetUserResponse.rows[0].id);
+            return;
+          // console.log("getUserResponse", await getUserResponse.json());
+        }
+        // console.log("getUserResponse", await getUserResponse.json());
+
+      }
+
+
     }
 
     // better to combine data then to use nested loops during render
@@ -116,7 +202,7 @@ export default function chooseKanji() {
           word_object_id : kanjiId,
           learned : learnedParam,
           learning : newLearningValue,
-          user_id : 1, // todo: hardcoded for testing
+          user_id : userId, // todo: hardcoded for testing
         };
 
 
@@ -166,7 +252,7 @@ export default function chooseKanji() {
         word_object_id : kanjiId,
         learned : newLearnedValue,
         learning : learningParam,
-        user_id : 1, // todo: hardcoded for testing
+        user_id : userId, // todo: hardcoded for testing
       };
 
 
@@ -255,18 +341,35 @@ export default function chooseKanji() {
         body: requestBody,
       };
 
-      // const userWordsResponse = await fetch('http://localhost:3000/api/userWordsPost', request);
-      // const userWordsResponse = await fetch('https://learn-japanese-livid.vercel.app/api/userWordsPost', request);
       const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsPost', request);
       await loadAllData();
     }
 
-    const testButton = () =>
+    const testButton = async () =>
     {
-      console.log("testing learningCheckbox, keeping track of changed", changedUserData);
+      // console.log("testing learningCheckbox, keeping track of changed", changedUserData);
       // setCount(count + 1);
       // setCount(count + 1);
       // console.log(count);
+      console.log(userId);
+      console.log(session)
+
+      const headers = {
+        "github_id": `${1}`,
+      };
+      // console.log("headers findOrCreateUser", headers);
+      // const requestBody = "Attempting to get user..."
+
+      const request =
+      {
+        method: 'GET',
+        headers: headers,
+        // body: requestBody,
+      };
+      
+      // check if user exists with given github unique id
+      // const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+      // console.log("getUserResponse", await getUserResponse.json());
     }
 
 
@@ -331,3 +434,12 @@ export default function chooseKanji() {
       </>
     );
   }
+
+  // export const getServerSideProps: GetServerSideProps = async () => {
+  //   console.log("Fetching data on page load...");
+  //   const data = "Fetched on refresh"; // Replace with API call if needed
+  
+  //   return {
+  //     props: { data },
+  //   };
+  // };

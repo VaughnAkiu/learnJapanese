@@ -2,11 +2,16 @@ import Head from 'next/head';
 import Link from 'next/link'
 import utilStyles from '../styles/utils.module.css';
 import { useSession, signOut } from "next-auth/react"
+import React, {useState} from 'react';
 
 const siteTitle = 'Learn Japanese';
 
 export default function Home({  }) {
   const { data: session, status } = useSession();
+
+    // const [count, setCount] = useState(0);
+  
+    // todo: less calls to the database?
 
   const popupCenter = (url, title) => {
     const dualScreenLeft = window.screenLeft ?? window.screenX;
@@ -33,6 +38,49 @@ export default function Home({  }) {
 
     newWindow?.focus();
   };
+
+  // const findOrCreateUser = async () => {
+  //   if('provider' in session.user && 'id' in session.user && session.user.provider == "github") {
+  //     const headers = {
+  //       "github_id": `${session.user.id}`,
+  //     };
+  //     // console.log("headers findOrCreateUser", headers);
+  //     // const requestBody = "Attempting to get user..."
+
+  //     const request =
+  //     {
+  //       method: 'GET',
+  //       headers: headers,
+  //       // body: requestBody,
+  //     };
+      
+  //     // check if user exists with given github unique id
+  //     const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+  //     if(getUserResponse.status == 200) {
+  //       const convertedGetUserResponse =  await getUserResponse.json();
+  //       if(convertedGetUserResponse.rows.length == 0) {
+          
+  //         const createUserRequest = {
+  //           method: 'POST',
+  //           headers: headers,
+  //         }
+
+  //         const createUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userPost', createUserRequest);
+  //         // console.log("createUserResponse response: ", await createUserResponse.json());
+  //         const convertedCreateUserResponse = await createUserResponse.json()
+  //         setUserId(convertedCreateUserResponse.rows[0].id);
+  //         return;
+  //       } 
+  //         setUserId(convertedGetUserResponse.rows[0].id);
+  //         return;
+  //       // console.log("getUserResponse", await getUserResponse.json());
+  //     }
+  //     // console.log("getUserResponse", await getUserResponse.json());
+
+  //   }
+
+
+  // }
 
     return (
       <>

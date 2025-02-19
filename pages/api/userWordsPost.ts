@@ -5,7 +5,7 @@ import UserWord from '../../objects/userWordObject'
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const client = await pool.connect(); // Get a client for the transaction
   try {
-    console.log('userWordsPost attempted to run...');
+    // console.log('userWordsPost attempted to run...');
 
     // const conversion : UserWord[] = JSON.parse(request.body);
     // console.log('userWordsPost request', request.body, conversion);
@@ -18,8 +18,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
       return;
     }
     // const headerInserts = request.headers["inserts"];
-    console.log('updates headers', headerUpdates);
-    console.log("inserts headers", headerInserts);
+    // console.log('updates headers', headerUpdates);
+    // console.log("inserts headers", headerInserts);
 
 
     // const queryData =  await pool.query('INSERT INTO public.user_words (word_object_id, learning, learned) VALUES (1, true, false);');
@@ -33,7 +33,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
       insertString += ';';
     }
-    console.log(insertString);
+    // console.log(insertString);
 
     let updateString = 'UPDATE public.user_words AS U SET learning = tt.learning, learned = tt.learned FROM (VALUES';
     if(headerUpdates.length > 0) {
@@ -45,7 +45,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
       updateString += ') AS tt (word_object_id, learning, learned) WHERE U.word_object_id = tt.word_object_id;';
     }
-    console.log(updateString);
+    // console.log(updateString);
 
     // const queryResult = await Promise.all([
     //   pool.query(insertString),

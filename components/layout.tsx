@@ -12,28 +12,12 @@ export default function Layout({ }) {
   const [data, setData] = useState<Card[]>();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/wordObjectGet');
-        const result = await response.json();
 
-        setData(result.rows); // Assume `result.rows` contains the desired data
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
 
   // const populateCards = async () => {
   //   let cards : Card[] = kanjiData;
     
-  //   const response = await fetch('http://localhost:3000/api/wordObjectGet');
   //   const data = await response.json();
 
   //   if(data.rows.length > 0) {
@@ -44,19 +28,7 @@ export default function Layout({ }) {
   // }
 
 
-  const testButton = async () => {
-    const response = await fetch('http://localhost:3000/api/wordObjectGet');
-    const data = await response.json();
-    if(data.rows.length > 0) {
-      const cards : Card[] = data.rows;
-      data.rows.forEach((row, index) => {
-        console.log("row: ", row, index);
-      });
-      console.log(cards);
-    }
 
-    return;
-  }
 
   return (
     <>
