@@ -6,6 +6,7 @@ import UserWord from '../objects/userWordObject'
 import UserWordMap from '../objects/userWordMapObject'
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
+// import { GetServerSideProps } from "next";
 
 const siteTitle = 'Learn Japanese';
 
@@ -27,6 +28,12 @@ export default function chooseKanji() {
   
     // todo: less calls to the database?
     useEffect(() => {
+
+      // if(!session) {
+      //   timeout(10000);
+      //   console.log('waited 1000 ms');
+      // }
+
       if(session && 'user_id' in session.user  && session.user.user_id) {
         console.log('choose kanji session ', session);
         setUserId(Number(session.user.user_id));
@@ -37,6 +44,11 @@ export default function chooseKanji() {
       // console.log("choose kanji staatus", status);
       // console.log("choose kanji userId", userId);
     }, []);
+
+    // const  timeout = async (delay: number) => {
+    //   return await new Promise( res => setTimeout(res, delay) );
+    // }
+
 
     const loadAllData = async () => {
       try {
@@ -190,7 +202,7 @@ export default function chooseKanji() {
           word_object_id : kanjiId,
           learned : learnedParam,
           learning : newLearningValue,
-          user_id : 1, // todo: hardcoded for testing
+          user_id : userId, // todo: hardcoded for testing
         };
 
 
@@ -240,7 +252,7 @@ export default function chooseKanji() {
         word_object_id : kanjiId,
         learned : newLearnedValue,
         learning : learningParam,
-        user_id : 1, // todo: hardcoded for testing
+        user_id : userId, // todo: hardcoded for testing
       };
 
 
@@ -339,7 +351,8 @@ export default function chooseKanji() {
       // setCount(count + 1);
       // setCount(count + 1);
       // console.log(count);
-      // console.log(userId);
+      console.log(userId);
+      console.log(session)
 
       const headers = {
         "github_id": `${1}`,
@@ -355,8 +368,8 @@ export default function chooseKanji() {
       };
       
       // check if user exists with given github unique id
-      const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
-      console.log("getUserResponse", await getUserResponse.json());
+      // const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
+      // console.log("getUserResponse", await getUserResponse.json());
     }
 
 
@@ -417,7 +430,16 @@ export default function chooseKanji() {
         </table>
         </div>
         <div className={utilStyles.containerLogin} onClick={() => submitButton()}>submit</div>
-        {/* <button onClick={() => testButton()}>test</button> */}
+        <button onClick={() => testButton()}>test</button>
       </>
     );
   }
+
+  // export const getServerSideProps: GetServerSideProps = async () => {
+  //   console.log("Fetching data on page load...");
+  //   const data = "Fetched on refresh"; // Replace with API call if needed
+  
+  //   return {
+  //     props: { data },
+  //   };
+  // };
