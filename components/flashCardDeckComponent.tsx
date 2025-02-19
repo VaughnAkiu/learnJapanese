@@ -1,9 +1,11 @@
 import utilStyles from '../styles/utils.module.css';
 import React, {useEffect, useState} from 'react';
 import Card from '../objects/wordCardObject'
+// import { useSession } from 'next-auth/react';
 
 const FlashCardDeck = ({cards} : {cards : Card[]}) => {
   // const [hovered, setHovered] = useState(false);
+  // const { data: session, status } = useSession();
   const [flipped, setFlipped] = useState(false);
 
   const [currentCard, setCurrentCard] = useState<Card>();

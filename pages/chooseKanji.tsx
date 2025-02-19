@@ -430,7 +430,7 @@ export default function chooseKanji() {
         </table>
         </div>
         <div className={utilStyles.containerLogin} onClick={() => submitButton()}>submit</div>
-        <button onClick={() => testButton()}>test</button>
+        {/* <button onClick={() => testButton()}>test</button> */}
       </>
     );
   }
