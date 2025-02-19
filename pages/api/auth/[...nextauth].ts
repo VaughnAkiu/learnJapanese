@@ -35,7 +35,7 @@ export const authOptions = {
           // check if user exists with given github unique id
           console.log("github signIn callback, about to await promise 1000ms");
           await new Promise(r => setTimeout(r, 1000));
-          console.log("github signIn callback, wait 1000ms success, about to fetch userGet");
+          console.log("github signIn callback, wait 1000ms success, about to fetch userGet, request: ", request);
           const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
           console.log("github signIn callback, fetch result, returned getUserResponse: ", getUserResponse);
           if(getUserResponse.status == 200) {
