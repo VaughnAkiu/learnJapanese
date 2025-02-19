@@ -28,6 +28,9 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
   }
 
   const clickNextButton = () => {
+    if(cards.length < 2) {
+      return;
+    }
     // create a copy of deck
     // pop off top card of deck and show it
       // setCurrentCard(deckCopy.pop());

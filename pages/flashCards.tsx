@@ -5,10 +5,14 @@ import Card from '../objects/wordCardObject'
 import UserWord from '../objects/userWordObject'
 import FlashCardDeck from '../components/flashCardDeckComponent';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
 
 const siteTitle = 'Learn Japanese';
 
 export default function flashCards() {
+
+    const { data: session, status } = useSession();
+    const [userId, setUserId] = useState(1);
 
     const [flashCards, setFlashCards] = useState<Card[]>();
     const [loading, setLoading] = useState(true);
@@ -20,9 +24,38 @@ export default function flashCards() {
           
           const wordObjectResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet');
           const wordObjectResult = await wordObjectResponse.json();
-          const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet');
+
+          let headers = {};
+
+          console.log('chooseKanji session ', session);
+          if(session && 'user_id' in session.user  && session.user.user_id) {
+            setUserId(Number(session.user.user_id));
+            headers = {
+              "user_id": `${session.user.user_id}`,
+            };
+          } else {
+            headers = {
+              "user_id": `${userId}`,
+            };
+          } 
+          const request =
+          {
+            method: 'GET',
+            headers: headers,
+          };
+          const userWordsResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userWordsGet', request);
           const userWordsResult = await userWordsResponse.json();
 
+          // if no user words, add a dummy user word (to create a single flashcard as an example)
+          if(userWordsResult.rows.length == 0) {
+            const dummyUserWord : UserWord = {    
+              word_object_id: 1,
+              learning: true,
+              learned: false,
+              user_id: userId
+            };
+            userWordsResult.rows.push(dummyUserWord);
+          }
           const flashCards = createFlashCards(wordObjectResult.rows, userWordsResult.rows);
           shuffleCards(flashCards);
           setFlashCards(flashCards);
