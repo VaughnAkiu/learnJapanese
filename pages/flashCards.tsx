@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 
 const siteTitle = 'Learn Japanese';
 
+// todo: bug with extra flashcard on page refresh
 export default function flashCards() {
 
     const { data: session, status } = useSession();
@@ -67,7 +68,7 @@ export default function flashCards() {
       };
   
       fetchData();
-    }, []);
+    }, [status, session]);
 
     // only create flash cards for objects with learning tag
     const createFlashCards = (kanjiCards : Card[], userWords : UserWord[]) =>

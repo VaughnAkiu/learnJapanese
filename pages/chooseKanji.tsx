@@ -43,7 +43,7 @@ export default function chooseKanji() {
       // console.log("choose kanji session", session);
       // console.log("choose kanji staatus", status);
       // console.log("choose kanji userId", userId);
-    }, []);
+    }, [status, session]);
 
     // const  timeout = async (delay: number) => {
     //   return await new Promise( res => setTimeout(res, delay) );
