@@ -363,9 +363,9 @@ export default function chooseKanji() {
               <p>learning = add to flash card deck.</p>
               <p>learned = no functionality yet.</p>
 
-              <Link href="/"><div className={utilStyles.containerSmall}>Home</div></Link>
+              {/* <Link href="/"><div className={utilStyles.containerSmall}>Home</div></Link> */}
               
-
+              <li><Link href="/">Home</Link></li>
               Back to home page...
               <p></p>
               <li>
