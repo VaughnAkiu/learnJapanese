@@ -15,13 +15,8 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
   const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      // console.log("test props", props);
-      // setDeckCopy(cards);
-      // console.log("test deckCopy", deckCopy);
-      // console.log(props.length);
-      // console.log(cards.length);
+
       setCurrentCard(cards[0]);
-      // console.log("test props is an array", Array.isArray(cards));
       setLoading(false);
     }, []);
 
@@ -37,7 +32,6 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
     // pop off top card of deck and show it
       // setCurrentCard(deckCopy.pop());
     // shouldnt? use pop when modifying state
-    // console.log(deckCopy.length);
     if(cardCounter < cards.length - 1) {
       setCardCounter(cardCounter + 1);
       setCurrentCard(cards[cardCounter])
@@ -48,7 +42,6 @@ const FlashCardDeck = ({cards} : {cards : Card[]}) => {
     }
     
     // if no cards to pop off then create another copy
-    // console.log("clicked");
   }
 
   return (

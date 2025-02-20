@@ -10,8 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if(request.headers["user_id"]) {
       queryString += ' WHERE user_id = ' + request.headers["user_id"].toString() + ';';
     }
-    // todo: add filter for user_id to query
-    console.log('userWordsGet queryString:', queryString);
+
     const queryData =  await pool.query(queryString);
     response.status(200).json(queryData);
   } catch (error) {

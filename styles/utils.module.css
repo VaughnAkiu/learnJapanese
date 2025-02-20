@@ -29,19 +29,9 @@
     /* width: 30rem; */
   }
 
-  .containerSmall {
-    border: 2px solid lightslategray;
-    background-color: lightslategray;
-    border-radius: 0.5em;
 
-    /* display: grid; */
-    /* place-items: center; */
-    text-align: center;
-    margin: 1rem;
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-  }
+
+
 
   .containerChooseKanji {
     border: 5px solid lightslategray;
@@ -81,4 +71,26 @@
     /* height: 3rem; */
     cursor: pointer;
     font-weight: 700;
+  }
+
+  .containerLogin:hover {
+    background-color: rgba(243, 243, 243, 0.726);
+  }
+
+  .containerSmall {
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(93, 126, 160);
+    border-radius: 0.5em;
+
+    /* display: grid; */
+    /* place-items: center; */
+    text-align: center;
+    margin: 1rem;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+  }
+
+  .containerSmall:hover {
+    background-color: rgba(243, 243, 243, 0.281);
   }

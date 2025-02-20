@@ -5,10 +5,9 @@ import UserWord from '../../objects/userWordObject'
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const client = await pool.connect(); // Get a client for the transaction
   try {
-    // console.log('userWordsPost attempted to run...');
+    console.log('userWordsPost attempted to run...');
 
     // const conversion : UserWord[] = JSON.parse(request.body);
-    // console.log('userWordsPost request', request.body, conversion);
     const headerUpdates : UserWord[] = JSON.parse(request.headers["updates"].toString());
     const headerInserts : UserWord[] = JSON.parse(request.headers["inserts"].toString());
 
@@ -18,9 +17,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
       return;
     }
     // const headerInserts = request.headers["inserts"];
-    // console.log('updates headers', headerUpdates);
-    // console.log("inserts headers", headerInserts);
-
 
     // const queryData =  await pool.query('INSERT INTO public.user_words (word_object_id, learning, learned) VALUES (1, true, false);');
     let insertString = 'INSERT INTO public.user_words (word_object_id, learning, learned, user_id) VALUES';
@@ -33,7 +29,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
       insertString += ';';
     }
-    // console.log(insertString);
 
     let updateString = 'UPDATE public.user_words AS U SET learning = tt.learning, learned = tt.learned FROM (VALUES';
     if(headerUpdates.length > 0) {
@@ -45,7 +40,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
       updateString += ') AS tt (word_object_id, learning, learned) WHERE U.word_object_id = tt.word_object_id;';
     }
-    // console.log(updateString);
 
     // const queryResult = await Promise.all([
     //   pool.query(insertString),
@@ -72,21 +66,3 @@ export default async function handler(request: NextApiRequest, response: NextApi
     client.release();
   }
 };
-
-// todo: consider using a transaction
-// transaction sample code
-// const client = await pool.connect(); // Get a client for the transaction
-//   try {
-//     await client.query("BEGIN"); // Start transaction
-
-//     await client.query("UPDATE users SET status = 'active' WHERE id = 1");
-//     await client.query("UPDATE users SET status = 'inactive' WHERE id = 2");
-
-//     await client.query("COMMIT"); // Commit transaction
-//     res.status(200).json({ message: "Transaction committed" });
-//   } catch (error) {
-//     await client.query("ROLLBACK"); // Undo changes on error
-//     res.status(500).json({ error: "Transaction failed" });
-//   } finally {
-//     client.release(); // Release client back to pool
-//   }

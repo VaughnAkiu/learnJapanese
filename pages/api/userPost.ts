@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if(request.headers["github_id"]) {
 
       insertString += ' (github_id) VALUES (' + request.headers["github_id"].toString() + ') RETURNING id;';
-      console.log('userPost insertString:', insertString);
+
       const queryData =  await pool.query(insertString);
 
       response.status(200).json(queryData);
