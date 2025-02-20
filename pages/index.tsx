@@ -39,49 +39,6 @@ export default function Home({  }) {
     newWindow?.focus();
   };
 
-  // const findOrCreateUser = async () => {
-  //   if('provider' in session.user && 'id' in session.user && session.user.provider == "github") {
-  //     const headers = {
-  //       "github_id": `${session.user.id}`,
-  //     };
-  //     // console.log("headers findOrCreateUser", headers);
-  //     // const requestBody = "Attempting to get user..."
-
-  //     const request =
-  //     {
-  //       method: 'GET',
-  //       headers: headers,
-  //       // body: requestBody,
-  //     };
-      
-  //     // check if user exists with given github unique id
-  //     const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
-  //     if(getUserResponse.status == 200) {
-  //       const convertedGetUserResponse =  await getUserResponse.json();
-  //       if(convertedGetUserResponse.rows.length == 0) {
-          
-  //         const createUserRequest = {
-  //           method: 'POST',
-  //           headers: headers,
-  //         }
-
-  //         const createUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userPost', createUserRequest);
-  //         // console.log("createUserResponse response: ", await createUserResponse.json());
-  //         const convertedCreateUserResponse = await createUserResponse.json()
-  //         setUserId(convertedCreateUserResponse.rows[0].id);
-  //         return;
-  //       } 
-  //         setUserId(convertedGetUserResponse.rows[0].id);
-  //         return;
-  //       // console.log("getUserResponse", await getUserResponse.json());
-  //     }
-  //     // console.log("getUserResponse", await getUserResponse.json());
-
-  //   }
-
-
-  // }
-
     return (
       <>
         {status === "authenticated" ? 

@@ -28,7 +28,6 @@ export default function flashCards() {
 
           let headers = {};
 
-          console.log('chooseKanji session ', session);
           if(session && 'user_id' in session.user  && session.user.user_id) {
             setUserId(Number(session.user.user_id));
             headers = {
@@ -75,8 +74,6 @@ export default function flashCards() {
     {
       const flashCardsLocal : Card[] = [];
 
-      // console.log("test kanjiCards", kanjiCards);
-      // console.log("test userWords", userWords);
       // todo(low prio): nested loop, optimize?
       for(let i = 0; i < userWords.length; i++)
       {
@@ -88,12 +85,10 @@ export default function flashCards() {
                     flashCardsLocal.push(kanjiCards[j]);
                     break;
                   }
-              // console.log("test loop iteration", j);
             }
         }
       }
 
-      // console.log("test flashCards", flashCards);
       return flashCardsLocal;
     }
 
@@ -109,7 +104,7 @@ export default function flashCards() {
         flashCardsLocal[i] = flashCardsLocal[j];
         flashCardsLocal[j] = x;
       }
-      // console.log('shuffled cards', flashCardsLocal);
+
       return flashCardsLocal;
     }
 
@@ -126,7 +121,6 @@ export default function flashCards() {
       for(let i = 0; i < flashCardsLocal.length; i++) {
         for(let i = 0; i < max; i++){
           rando = Math.floor(Math.random() * (max - min + 1) + min);
-          // console.log('random', rando);
         }
         max--;
       }

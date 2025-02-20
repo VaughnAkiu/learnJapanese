@@ -31,18 +31,13 @@ export default function chooseKanji() {
 
       // if(!session) {
       //   timeout(10000);
-      //   console.log('waited 1000 ms');
       // }
 
       if(session && 'user_id' in session.user  && session.user.user_id) {
-        console.log('choose kanji session ', session);
         setUserId(Number(session.user.user_id));
         // findOrCreateUser();
       }
       loadAllData();
-      // console.log("choose kanji session", session);
-      // console.log("choose kanji staatus", status);
-      // console.log("choose kanji userId", userId);
     }, [status, session]);
 
     // const  timeout = async (delay: number) => {
@@ -54,13 +49,11 @@ export default function chooseKanji() {
       try {
         setLoading(true);
         const urlString = process.env.NEXT_PUBLIC_API_URL + 'wordObjectGet';
-        // console.log('urlString: ', urlString);
         const wordObjectResponse = await fetch(urlString);
         const wordObjectResult = await wordObjectResponse.json();
 
         let headers = {};
 
-        console.log('chooseKanji session ', session);
         if(session && 'user_id' in session.user  && session.user.user_id) {
           headers = {
             "user_id": `${session.user.user_id}`,
@@ -70,7 +63,6 @@ export default function chooseKanji() {
             "user_id": `${userId}`,
           };
         } 
-        // console.log("headers findOrCreateUser", headers);
         // const requestBody = "Attempting to get user..."
 
         const request =
@@ -99,7 +91,6 @@ export default function chooseKanji() {
         const headers = {
           "github_id": `${session.user.id}`,
         };
-        // console.log("headers findOrCreateUser", headers);
         // const requestBody = "Attempting to get user..."
 
         const request =
@@ -121,16 +112,14 @@ export default function chooseKanji() {
             }
 
             const createUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userPost', createUserRequest);
-            // console.log("createUserResponse response: ", await createUserResponse.json());
+
             const convertedCreateUserResponse = await createUserResponse.json()
             setUserId(convertedCreateUserResponse.rows[0].id);
             return;
           } 
             setUserId(convertedGetUserResponse.rows[0].id);
             return;
-          // console.log("getUserResponse", await getUserResponse.json());
         }
-        // console.log("getUserResponse", await getUserResponse.json());
 
       }
 
@@ -142,8 +131,6 @@ export default function chooseKanji() {
     {
       const userWordMap : UserWordMap[] = [];
 
-      // console.log("test kanjiCards", kanjiCards);
-      // console.log("test userWords", userWords);
       // todo(low prio): nested loop, optimize?
       for(let i = 0; i < kanjiCards.length; i++)
       {
@@ -166,7 +153,6 @@ export default function chooseKanji() {
             wordCreated = true;
             break;
           }
-          // console.log("test loop iteration", j);
         }
         if(!wordCreated){
           const userWordMapPiece : UserWordMap = {
@@ -184,8 +170,6 @@ export default function chooseKanji() {
 
 
       }
-
-      // console.log("test userWordMap", userWordMap);
       return userWordMap;
     }
 
@@ -325,7 +309,6 @@ export default function chooseKanji() {
     const submitButton = async () =>
     {
       const [inserts, updates] = calculateDatabaseTransaction();
-      console.log("inserts", inserts, "updates", updates);
 
       const requestBody = "Attempting to post data..."
 
@@ -347,18 +330,9 @@ export default function chooseKanji() {
 
     const testButton = async () =>
     {
-      // console.log("testing learningCheckbox, keeping track of changed", changedUserData);
-      // setCount(count + 1);
-      // setCount(count + 1);
-      // console.log(count);
-      console.log(userId);
-      console.log(session)
-
       const headers = {
         "github_id": `${1}`,
       };
-      // console.log("headers findOrCreateUser", headers);
-      // const requestBody = "Attempting to get user..."
 
       const request =
       {
@@ -369,7 +343,6 @@ export default function chooseKanji() {
       
       // check if user exists with given github unique id
       // const getUserResponse = await fetch(process.env.NEXT_PUBLIC_API_URL + 'userGet', request);
-      // console.log("getUserResponse", await getUserResponse.json());
     }
 
 
@@ -382,19 +355,23 @@ export default function chooseKanji() {
         <header>
             <>
               <h2 className={utilStyles.headingLg}>
-                  Choose your kanji
+                  Choose Kanji
               </h2>
-              <p>fill in checkboxes and submit to update your flash card deck...</p>
-              <p>learning = add to flash card deck. learned = no functionality yet.</p>
-              <li>
-              <Link href="/">Home</Link>
-              </li>
+              <p>Fill in checkboxes and submit to update your flash card deck.</p>
+              If you sign in at the home page you can assign a deck to your account...<br/>
+              otherwise a master deck is used
+              <p>learning = add to flash card deck.</p>
+              <p>learned = no functionality yet.</p>
+
+              {/* <Link href="/"><div className={utilStyles.containerSmall}>Home</div></Link> */}
+              
+              <li><Link href="/">Home</Link></li>
               Back to home page...
               <p></p>
               <li>
                 <Link href="flashCards">Flash Cards</Link>
               </li>
-              go to your flash card deck...
+              Go to your flash card deck...
               {/* <p>{count}</p> */}
             </>
         </header>
@@ -436,7 +413,6 @@ export default function chooseKanji() {
   }
 
   // export const getServerSideProps: GetServerSideProps = async () => {
-  //   console.log("Fetching data on page load...");
   //   const data = "Fetched on refresh"; // Replace with API call if needed
   
   //   return {

@@ -11,8 +11,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if(request.headers["github_id"]) {
       queryString += ' WHERE github_id = ' + request.headers["github_id"].toString() + ';';
     }
-    console.log('userGet queryString:', queryString);
-    // console.log('user table output test:', userTable);
     const queryData =  await pool.query(queryString);
 
     response.status(200).json(queryData);
